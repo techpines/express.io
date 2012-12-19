@@ -1,0 +1,13 @@
+{
+    "name": "express.io",
+    "version": "0.0.1",
+    "description": "Lightweight wrapper for Express/Socket.io Integration",
+    "author": "Brad Carleton <brad@techpines.com>",
+    "repository": "git://github.com/techpines/express.io",
+    "dependencies": {
+        "coffee-script": "1.4.0",
+        "express": "3.0.4",
+        "socket.io": "0.9.13"
+    },
+    "main": "switch.js"
+}
