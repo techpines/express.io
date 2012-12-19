@@ -19,7 +19,6 @@ express.application.io = ->
 listen = express.application.listen
 express.application.listen = ->
     args = Array.prototype.slice.call arguments, 0
-    console.log args
     if @server?
         @server.listen.apply @server, args
     else
