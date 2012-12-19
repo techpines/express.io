@@ -9,10 +9,20 @@ express.application.http = ->
     return this
 
 express.application.https = (options) ->
-    @server = http.createServer options, this
+    @server = https.createServer options, this
     return this
 
 express.application.io = ->
     @io = io.listen @server
     return this
+
+listen = express.application.listen
+express.application.listen = ->
+    args = Array.prototype.slice.call arguments, 0
+    console.log args
+    if @server?
+        @server.listen.apply @server, args
+    else
+        listen.apply this, args
+        
 
