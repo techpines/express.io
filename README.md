@@ -16,20 +16,30 @@ app.http().io()
 app.listen(7076)
 ```
 
-Now you use:
+## Upgrade your Existing Express Apps with Realtime
+
+Simply replace this line of code.
 
 ```javascript
-app // the app object from express
-app.io // the io object from socket.io
+require('express')
 ```
 
-## Routes for your Web Sockets
+with this line of code.
+
+```javascript
+require('express.io')
+```
+
+Your app should run just the same as before, except now you're ready for reatltime.
+
+## Routes for socket.io
 ```javascript
 app.io.route 'hello', (request) ->
     request.io.emit 'hello', 'world'
 ```
 
 And Express Sessions 'just work'
+
 ```javascript
 app.use(express.session({secret: 'dont-tell-nobody'}))
 
