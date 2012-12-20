@@ -1,19 +1,21 @@
 
 express = require '../lib'
+RedisStore = require('connect-redis') express
 app = express()
+redis = require 'redis'
+
 
 app.configure ->
     app.use express.cookieParser()
     app.use express.session
         secret: 'koho'
+        store: new RedisStore(client: redis.createClient())
     app.set 'views', __dirname
    
 app.get '/', (request, response) ->
     response.render 'test.jade'
 
 app.get '/ping', (request, response) ->
-    console.log 'ping'
-    console.log request.session
     app.io.sockets.emit 'funky', count: request.session.count
     response.send 'ping'
 

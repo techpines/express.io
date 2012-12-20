@@ -15,6 +15,8 @@ express.session = (options) ->
     options.cookie ?= new Object
     sessionConfig = options
     return session options
+for key, value of session
+    express.session[key] = value
 
 express.application.http = ->
     @server = http.createServer this
