@@ -76,6 +76,22 @@ app.use express.sessions()
 app.listen(7076)
 ```
 
+### Upgrade your Regular Express App
+
+Replace this in your existing code:
+
+```javascript
+require('express')
+```
+
+with this
+
+```javascript
+require('express.io')
+```
+
+Everything should work just as before, except now you're ready for socket.io!
+
 ## License
 It's free! Party with the MIT!
 
