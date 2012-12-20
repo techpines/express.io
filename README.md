@@ -91,7 +91,8 @@ Socket.IO allows you to emit and receive custom events.
 ```js
 // note, io.listen(<port>) will create a http server for you
 app = require('express.io')
-app.http().io().listen(80)
+app.http().io()
+
 
 app.get('/', function(request, response) {
     app.io.sockets.emit('this', { will: 'be received by everyone'})
@@ -102,7 +103,9 @@ app.io.route('private message', function(request) {
     console.log('I received a private message by ', request.io, ' saying ', request.body)
 })
 
+app.listen(7076)
 ```
+
 
 ### Storing data associated to a client
 
@@ -112,7 +115,8 @@ necessary for the duration of the session.
 #### Server side
 
 ```js
-var io = require('socket.io').listen(80);
+app = require('express.io')
+app.http().io()
 
 io.sockets.on('connection', function (socket) {
   socket.on('set nickname', function (name) {
@@ -143,56 +147,6 @@ io.sockets.on('connection', function (socket) {
 </script>
 ```
 
-### Restricting yourself to a namespace
-
-If you have control over all the messages and events emitted for a particular
-application, using the default `/` namespace works.
-
-If you want to leverage 3rd-party code, or produce code to share with others,
-socket.io provides a way of namespacing a `socket`.
-
-This has the benefit of `multiplexing` a single connection. Instead of
-socket.io using two `WebSocket` connections, it'll use one.
-
-The following example defines a socket that listens on '/chat' and one for
-'/news':
-
-#### Server side
-
-```js
-var io = require('socket.io').listen(80);
-
-var chat = io
-  .of('/chat')
-  .on('connection', function (socket) {
-    socket.emit('a message', { that: 'only', '/chat': 'will get' });
-    chat.emit('a message', { everyone: 'in', '/chat': 'will get' });
-  });
-
-var news = io
-  .of('/news');
-  .on('connection', function (socket) {
-    socket.emit('item', { news: 'item' });
-  });
-```
-
-#### Client side:
-
-```html
-<script>
-  var chat = io.connect('http://localhost/chat')
-    , news = io.connect('http://localhost/news');
-
-  chat.on('connect', function () {
-    chat.emit('hi!');
-  });
-
-  news.on('news', function () {
-    news.emit('woot');
-  });
-</script>
-```
-
 ### Sending volatile messages.
 
 Sometimes certain messages can be dropped. Let's say you have an app that
@@ -208,7 +162,8 @@ In that case, you might want to send those messages as volatile messages.
 #### Server side
 
 ```js
-var io = require('socket.io').listen(80);
+app = require('express.io')
+app.http().io()
 
 io.sockets.on('connection', function (socket) {
   var tweets = setInterval(function () {
@@ -221,6 +176,8 @@ io.sockets.on('connection', function (socket) {
     clearInterval(tweets);
   });
 });
+
+app.listen(7076)
 ```
 
 #### Client side
@@ -240,13 +197,13 @@ means you can also pass data along:
 #### Server side
 
 ```js
-var io = require('socket.io').listen(80);
+app = require('express.io')
+app.http().io()
 
-io.sockets.on('connection', function (socket) {
-  socket.on('ferret', function (name, fn) {
-    fn('woot');
-  });
-});
+app.io.route 'ferret', (name, next) ->
+    next('woot')
+
+app.listen(7076)
 ```
 
 #### Client side
@@ -271,12 +228,15 @@ that starts it.
 #### Server side
 
 ```js
-var io = require('socket.io').listen(80);
+app = require('express.io')
+app.http().io()
 
-io.sockets.on('connection', function (socket) {
-  socket.broadcast.emit('user connected');
-  socket.broadcast.json.send({ a: 'message' });
+app.io.route('announce', function(request) {
+    request.io.broadcast('user connected');
+    request.io.broadcast.json.send({a: 'message'})
 });
+
+app.listen(7076)
 ```
 
 ### Rooms
@@ -290,13 +250,16 @@ rooms in each socket.
 #### Server side
 
 ```js
-var io = require('socket.io').listen(80);
+app = require('express.io')
+app.http().io()
 
 io.sockets.on('connection', function (socket) {
   socket.join('justin bieber fans');
   socket.broadcast.to('justin bieber fans').emit('new fan');
   io.sockets.in('rammstein fans').emit('new non-fan');
 });
+
+app.listen(7076)
 ```
 
 ### Using it just as a cross-browser WebSocket
