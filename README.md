@@ -34,3 +34,34 @@ app.io.route 'hello', (request) ->
 app.io.route 'get-my-session', (request) ->
     request.io.emit 'got-your-session', request.session
 ```
+
+## Recipes
+
+### Socket.io server with HTTPS
+```javascript
+options = {
+    key: fs.readFileSync('key.pem'), 
+    cert: fs.readFileSync('cert.pem')
+}
+
+app = require('express.io')
+app.https(options).io()
+
+//build your realtime-web app
+
+app.listen(7076)
+```
+
+### Socket.io server with Sessions
+```javascript
+express = require('express.io')
+
+app = express()
+app.https(options).io()
+
+app.use express.sessions()
+
+//build your realtime-web app
+
+app.listen(7076)
+```
