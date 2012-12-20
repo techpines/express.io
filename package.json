@@ -7,7 +7,8 @@
     "dependencies": {
         "coffee-script": "1.4.0",
         "express": "3.0.4",
-        "socket.io": "0.9.13"
+        "socket.io": "0.9.13",
+        "connect": "*"
     },
     "main": "switch.js"
 }
