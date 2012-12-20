@@ -118,24 +118,28 @@ necessary for the duration of the session.
 app = require('express.io')
 app.http().io()
 
-io.sockets.on('connection', function (socket) {
-  socket.on('set nickname', function (name) {
-    socket.set('nickname', name, function () { socket.emit('ready'); });
-  });
+app.get('/', function(request, response) ->
+    response.sendfile(__dirname + '/client.html')
+})
 
-  socket.on('msg', function () {
-    socket.get('nickname', function (err, name) {
-      console.log('Chat message by ', name);
-    });
-  });
-});
+app.io.route('set nickname', function(request) {
+    request.io.set('nickname', request.body)
+})
+
+app.io.route('message', function(request) {
+    request.io.get('nickname', function(err, name) {
+        console.log('Chat message by ', name)
+    })
+})
+
+app.listen(7076)
 ```
 
 #### Client side
 
 ```html
 <script>
-  var socket = io.connect('http://localhost');
+  var socket = io.connect();
 
   socket.on('connect', function () {
     socket.emit('set nickname', prompt('What is your nickname?'));
