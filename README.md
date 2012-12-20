@@ -94,7 +94,7 @@ app = require('express.io')
 app.http().io().listen(80)
 
 app.get('/', function(request, response) {
-    app.io.sockets.emit('this', { will: 'be received by everyone})
+    app.io.sockets.emit('this', { will: 'be received by everyone'})
     response.send('sockets are rockin')
 })
 
