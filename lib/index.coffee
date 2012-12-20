@@ -32,6 +32,7 @@ express.application.io = ->
     @io.route = (route, next) ->
        @router[route] = next
     @io.configure => @io.set 'authorization', (data, next) =>
+        return next null, true unless sessionConfig.store?
         cookieParser = express.cookieParser()
         cookieParser data, null, (error) ->
             return next error if error?
