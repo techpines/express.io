@@ -2,12 +2,10 @@
 the realtime-web framework for node.js
 
 ```coffeescript
-express.io = [express + socket.io]
+express.io = express + socket.io
 ```
 
-## Why did I build this?
-
-Express is awesome, and socket.io is awesome.   Sometimes they don't play nicely.  
+## Simple App Setup
 
 ```javascript
 app = require 'express.io'
@@ -18,4 +16,10 @@ app.http().io()
 app.listen 7076
 ```
 
+Now you use:
+
+```javascript
+app // the app object from express
+app.io // the io object from socket.io
+```
 
