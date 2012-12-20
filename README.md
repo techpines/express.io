@@ -16,15 +16,15 @@ app.http().io()
 app.listen(7076)
 ```
 
-## Upgrade your Existing Express Apps with Realtime
+## Upgrade your existing Express apps with Socket.io
 
-Simply replace this line of code.
+Simply replace this line of code
 
 ```javascript
 require('express')
 ```
 
-with this line of code.
+with this line of code
 
 ```javascript
 require('express.io')
@@ -32,13 +32,13 @@ require('express.io')
 
 Your app should run just the same as before, except now you're ready for reatltime.
 
-## Routes for socket.io
+## Routes for Socket.io
 ```javascript
 app.io.route 'hello', (request) ->
     request.io.emit 'hello', 'world'
 ```
 
-And Express Sessions 'just work'
+and express sessions 'just work'
 
 ```javascript
 app.use(express.session({secret: 'dont-tell-nobody'}))
@@ -56,11 +56,7 @@ Here's some short easy recipes to get you started.
 This is how you use https.
 
 ```javascript
-options = {
-    key: fs.readFileSync('key.pem'), 
-    cert: fs.readFileSync('cert.pem')
-}
-
+options = {key: 'key', cert: 'cert'}
 app = require('express.io')
 app.https(options).io()
 
@@ -85,22 +81,6 @@ app.use express.sessions()
 
 app.listen(7076)
 ```
-
-### Upgrade your Regular Express App
-
-Replace this in your existing code:
-
-```javascript
-require('express')
-```
-
-with this
-
-```javascript
-require('express.io')
-```
-
-Everything should work just as before, except now you're ready for socket.io!
 
 ## License
 It's free! Party with the MIT!
