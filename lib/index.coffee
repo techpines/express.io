@@ -28,6 +28,9 @@ express.application.https = (options) ->
 
 express.application.io = ->
     @io = io.listen @server
+    @io.router = new Object
+    @io.route = (route, next) ->
+       @router[route] = next
     @io.configure => @io.set 'authorization', (data, next) =>
         cookieParser = express.cookieParser()
         cookieParser data, null, (error) ->
@@ -40,7 +43,24 @@ express.application.io = ->
                 data.session = new connect.session.Session data, session
                 data.sessionStore = sessionConfig.store
                 next null, true
+    @io.sockets.on 'connection', (socket) =>
+        initRoutes socket, @io.router
     return this
+
+initRoutes = (socket, router) ->
+    for key, value of router
+        socket.on key, (data, next) ->
+            value
+                body: data
+                io: socket
+                session: socket.handshake.session
+                sessionID: socket.handshake.sessionID
+                socket: socket
+                headers: socket.handshake.headers
+                cookies: socket.handshake.cookies
+            , next
+                
+    
 
 listen = express.application.listen
 express.application.listen = ->
