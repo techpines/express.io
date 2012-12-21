@@ -1,7 +1,7 @@
 
 # Express.io Examples
 
-All of our examples work on node 0.8.x.  To get started do the following:
+All of our examples work on node 0.8.x.  To get started run the following commands:
 
 ```bash
 git clone git://github.com/techpines/express.io
@@ -9,7 +9,18 @@ cd express.io/examples
 npm install
 ```
 
-## Simple HTTP Server and Socket.io Server
+Then `cd` into an example directory and run:
+
+```bash
+node app.js
+```
+
+Enjoy!
+
+## Simple HTTP + Socket.io
+
+This is the cannonical express.io example.  It does nothing, except set up 
+an HTTP server and a Socket.io server together.
 
 ```js
 app = require('express.io')()
@@ -20,7 +31,9 @@ app.http().io()
 app.listen(7076)
 ```
 
-## Simple HTTPS Server and Socket.io Server
+## Simple HTTPS + Socket.io
+
+This is the same as the HTTP example, but for HTTPS.  You have to pass the key and cert contents as an option.
 
 ```js
 app = require('express.io')()
@@ -33,16 +46,20 @@ app.listen(7076)
 
 ## Simple Example Using Routes
 
+Express.io comes with a simple Socket.io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives a Socket.io request object.
+
 #### Server
 
 ```js
 app = require('express.io')()
 app.http().io()
 
+// Setup the hello route.
 app.io.route('hello', function(req) {
     console.log('Socket says ' + req.body.hello)
 })
 
+// Send the client html.
 app.get('/', function(req, res) { 
     res.sendfile(__dirname + '/client.html')
 })
@@ -64,10 +81,10 @@ socket.emit('hello', {hello: 'client is happy'})
 
 ## Realtime Canvas
 
-```bash
-cd realtime-canvas
-node app.js
-```
+This is a realtime canvas example.  If you draw on the canvas with two browser windows open you will see how socket.io broadcast works.
+
+This example is really cool, and it works right of the box, so give it a try!
+
 
 #### Server
 
@@ -131,5 +148,5 @@ app.listen(7076)
         })
     })         
 </script>
-<canvas width="800px", height="400px"></canvas>
+<canvas width="800px" height="400px" style="margin: 0 auto"></canvas>
 ```
