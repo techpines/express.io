@@ -49,7 +49,7 @@ express.application.io = ->
     return this
 
 initRoutes = (socket, router) ->
-    for key, value of router
+    setRoute = (key, value) ->
         socket.on key, (data, next) ->
             value
                 body: data
@@ -60,7 +60,8 @@ initRoutes = (socket, router) ->
                 headers: socket.handshake.headers
                 cookies: socket.handshake.cookies
             , next
-                
+    for key, value of router
+        setRoute(key, value)
     
 
 listen = express.application.listen

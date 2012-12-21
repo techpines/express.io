@@ -1,0 +1,13 @@
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+socket = io.connect()
+
+socket.emit('make-changes', function() {
+    alert('they gonna make my changes!')
+})
+
+socket.on('disconnect', function() {
+    alert('i got disconnected, what gives')
+})
+</script>
