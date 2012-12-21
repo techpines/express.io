@@ -1,9 +1,8 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-socket = io.connect()
 
-socket.on('connect', function() {
-    socket.emit('hello', {hello: 'client is happy'})
-})
+socket = io.connect()
+socket.emit('hello', {hello: 'client is happy'})
+
 </script>
