@@ -18,6 +18,8 @@ express.session = (options) ->
 for key, value of session
     express.session[key] = value
 
+express.io = io
+
 express.application.http = ->
     @server = http.createServer this
     return this
@@ -52,7 +54,7 @@ initRoutes = (socket, router) ->
     setRoute = (key, value) ->
         socket.on key, (data, next) ->
             value
-                body: data
+                data: data
                 io: socket
                 session: socket.handshake.session
                 sessionID: socket.handshake.sessionID

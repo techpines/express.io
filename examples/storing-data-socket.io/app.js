@@ -1,7 +1,6 @@
 
 express = require('express.io')
-app = express()
-app.http().io()
+app = express().http().io()
 
 // Setup your sessions.
 app.use(express.cookieParser())
