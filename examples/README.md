@@ -85,6 +85,45 @@ socket.emit('hello', {hello: 'client is happy'})
 </script>
 ```
 
+## Using Sessions
+
+Sessions are setup as you would normally do with express!  Nothing different.  When you start making socket.io requests then you will have access to the express session.  Use it to store user data, or for authentication, whatever.
+
+Note that you need to save the session explicitly for socket.io requests, because there is no guarantee of a response, unlike a noraml http request.
+
+```js
+express = require('express.io')
+app = express().http().io()
+
+// Setup your sessions.
+app.use(express.cookieParser())
+app.use(express.session({secret: 'monkey'}))
+
+// Setup a route to get the sockets 'hey' event.
+app.io.route('hey', function(req) {
+    req.session.name = req.data
+    req.session.save(function() {
+        req.socket.emit('how are you?')
+    })
+})
+
+// Make sure to 'chat' with the socket, it might be lonely.
+app.io.route('chat', function(req) {
+    req.session.feelings = req.data
+    req.session.save(function() {
+        req.socket.emit('cool', req.session)
+    })
+})
+
+// Send back the client html.
+app.get('/', function(req, res) {
+    req.session.loginDate = new Date().toString()
+    res.sendfile(__dirname + '/client.html')
+})
+
+app.listen(7076)
+```
+
 ## Realtime Canvas
 
 This is a realtime canvas example.  If you draw on the canvas with two browser windows open you will see how socket.io broadcast works.
