@@ -3,6 +3,8 @@
     "version": "1.0.1",
     "author": "Brad Carleton <brad@techpines.com>",
     "dependencies": {
-        "express.io": "*"
+        "express.io": "*",
+        "redis": "*",
+        "socket.io-mongo": "*"
     }
 }
