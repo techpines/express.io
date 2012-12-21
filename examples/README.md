@@ -57,8 +57,7 @@ app.listen(7076)
 <script>
 socket = io.connect()
 
-socket.on('connect', function() {
-    socket.emit('hello', {hello: 'client is happy'})
-})
+socket.emit('hello', {hello: 'client is happy'})
+
 </script>
 ```
