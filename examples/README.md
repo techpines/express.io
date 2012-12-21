@@ -3,7 +3,7 @@
 
 All of our examples work on node 0.8.x.  To get started do the following:
 
-```js
+```bash
 git clone git://github.com/techpines/express.io
 cd express.io/examples
 npm install
@@ -34,6 +34,8 @@ app.listen(7076)
 ## Simple Example Using Routes
 
 #### Server
+
+```js
 app = require('express.io')()
 app.http().io()
 
@@ -46,6 +48,8 @@ app.get('/', function(req, res) {
 })
 
 app.listen(7076)
+```
+
 #### Client
 
 ```html
