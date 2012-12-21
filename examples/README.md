@@ -99,41 +99,37 @@ app.listen(7076)
 <script>
     App = {}
     App.socket = io.connect()
-    App.socket.on('draw', function(data) {
-        App.draw(data.x, data.y, data.type)
-    })
-    // Init function.
-    App.init = function() {
-        App.ctx = $('canvas')[0].getContext("2d")
-        App.ctx.fillStyle = "solid"        
-        App.ctx.strokeStyle = "#bada55"    
-        App.ctx.lineWidth = 5               
-        App.ctx.lineCap = "round"
-        $('canvas').live('drag dragstart dragend', function(e) {
-            type = e.handleObj.type
-            offset = $(this).offset()
-            var x = e.clientX - offset.left
-            var y = e.clientY - offset.top
-            App.draw(x,y,type)
-            App.socket.emit('drawClick', { x : x, y : y, type : type})
-        })
-    }         
+
     // Draw Function
-    App.draw = function(x,y,type) {
-        if (type == "dragstart") {
+    App.draw = function(data) {
+        if (data.type == "dragstart") {
             App.ctx.beginPath()
-            App.ctx.moveTo(x,y)
-        } else if (type == "drag") {
-            App.ctx.lineTo(x,y)
+            App.ctx.moveTo(data.x,data.y)
+        } else if (data.type == "drag") {
+            App.ctx.lineTo(data.x,data.y)
             App.ctx.stroke()
         } else {
             App.ctx.stroke()
             App.ctx.closePath()
         }
     }
+
+    App.socket.on('draw', App.draw) // draw from other sockets
+
+    // Bind click and drag events to drawing and sockets.
     $(function() {
-        App.init()
-    })
+        App.ctx = $('canvas')[0].getContext("2d")
+        $('canvas').live('drag dragstart dragend', function(e) {
+            offset = $(this).offset()
+            data = {
+                x: (e.clientX - offset.left), 
+                y: (e.clientY - offset.top),
+                type: e.handleObj.type
+            }
+            App.draw(data) // draw yourself
+            App.socket.emit('drawClick', data) // broadcast draw
+        })
+    })         
 </script>
 <canvas width="800px", height="400px"></canvas>
 ```
