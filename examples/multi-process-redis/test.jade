@@ -1,7 +1,0 @@
-
-script(src="/socket.io/socket.io.js")
-:coffeescript
-  socket = io.connect('/')
-  socket.on 'funky', (data) ->
-    console.log data
-    socket.emit 'thanks'

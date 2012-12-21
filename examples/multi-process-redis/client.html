@@ -1,0 +1,12 @@
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+socket = io.connect()
+
+socket.emit('hey')
+
+socket.on('shout-out', function(data) {
+    $('#main').append('<p>' + 'Server pid: ' + data + ' says new socket joined')
+})
+</script>
+<div id="main"></div>
