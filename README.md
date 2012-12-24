@@ -18,18 +18,12 @@ app.http().io()
 app.listen(7076)
 ```
 
-or go one-liner style
-
-```js
-require('express.io')().http().io().listen(7076)
-```
-
 ## Upgrade your existing Express apps with Socket.io
 
 First install:
 
 ```bash
-npm install
+npm install express.io
 ```
 
 Then, simply replace this line of code
