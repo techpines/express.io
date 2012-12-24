@@ -61,9 +61,10 @@ Hey this thing is open source, so give a contrib shout out.
 
 [Fork]() this bad boy, edit the `CONTRIB` file with your github handle and a short message, then make a pull request.
 
+### CONTRIB
 ```twitter
 @techpines - woot!
-+ @saladfingers - i like express.io bro
++ @saladfingers - I like express.io bro
 ```
 
 ## License
