@@ -1,7 +1,9 @@
 
 # Express.io API Reference
 
-## Express Object
+Here is 
+
+## ExpressIO
 
 ```js
 express = require('express.io')
@@ -9,23 +11,26 @@ express = require('express.io')
 
 ### New Properties
 
-* `express.io` - is the socket.io object
+* `express()` - Returns a new `ExpressApp` object.
+* `express.io` - The socket.io object.
 
 Otherwise refer to the express docs:
 
 [Express Docs](http://expressjs.com/api.html)
 
-## ExpressApp
+## ExpressIOApp
 
 ```js
 app = require('express.io')()
 ```
 
-### New Methods
+### Properties
 
 * `app.http()` - starts an http server, returns `app`
 * `app.https(options)` - starts an https server, returns `app`
 * `app.io()` - starts an io server, returns `app`
+
+For a complete list of properties, please check the [docs](http://expressjs.com/api.html#app.set).
 
 ## AppIO 
 
@@ -55,14 +60,14 @@ __Note__:  You must call `app.io()` before using.
 
 * `app.io.brodcast(event, data)` - Broadcast the `event` and `data` to all clients.
 * `app.io.room(room).broadcast(event, data)` - Broadcast the `event` and `data` only to clients in the `room`.
-* `app.io.route(event, callback)` - Takes a `route` name and a `callback`.  The callback passes `req`, which is a SocketRequest object.
+* `app.io.route(event, callback)` - Takes a `route` name and a `callback`.  The callback passes `req`, which is a `SocketRequest` object.
 * `app.io.set(property, value)` - Set a global io server property.
 * `app.io.enable(property)` - Enable an io server feature.
 * `app.io.configure(environment)` - Similar to the `app.configure` method for express.
 
 ## SocketRequest
 
-This object appears in the io routes.
+This object is passed to the io routes.
 
 ```js
 app.io.route('hello', function(req) {
@@ -80,6 +85,8 @@ app.io.route('hello', function(req) {
 * `req.socket` - The actual socket.io `socket`. Please use `req.io` instead.
 
 ## RequestIO
+
+This object comes with the `SocketRequest`, and it gives you access to the request io.
 
 ```js
 app.io.route('example', function(req) {
@@ -103,6 +110,8 @@ app.io.route('example', function(req) {
 * `req.io.leave(room)` - Make the client leave the specified `room`.
 
 ### Reserved Events
+
+These events are reserved and should not be used with `app.io.route` or `req.io.on` unless you know what you are doing.
 
 * `connect`
 * `connecting`
