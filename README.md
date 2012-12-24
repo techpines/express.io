@@ -55,14 +55,15 @@ Have frequent questions, we have frequent answers.
 
 [Bring me FAQ](toad)
 
-## Contrib
+## Contrib Shout Out
 
 Hey this thing is open source, so give a contrib shout out.
 
 [Fork]() this bad boy, edit the `CONTRIB` file with your github handle and a short message, then make a pull request.
 
-```
-@saladfingers - i like express.io bro
+```twitter
+@techpines - woot!
++ @saladfingers - i like express.io bro
 ```
 
 ## License
