@@ -7,7 +7,7 @@ express.io = express + socket.io
 
 ## Simple App Setup
 
-Here is the cannonical express.io example.
+Here is the canonical express.io example.
 
 ```javascript
 app = require('express.io')()
@@ -18,7 +18,7 @@ app.http().io()
 app.listen(7076)
 ```
 
-## Upgrade your existing Express apps with Socket.io
+## Upgrade your existing Express apps
 
 First install:
 
@@ -38,7 +38,7 @@ with this line of code
 require('express.io')
 ```
 
-Your app should run just the same as before, except now you're ready for reatltime.  Express.io is a superset of express and socket.io!
+Your app should run just the same as before.  Express.io is a superset of express and socket.io!
 
 
 ## Examples
