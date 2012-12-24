@@ -5,6 +5,8 @@ io = require 'socket.io'
 http = require 'http'
 https = require 'https'
 
+express.io = io
+
 session = express.session
 delete express.session
 sessionConfig = new Object
@@ -17,8 +19,6 @@ express.session = (options) ->
     return session options
 for key, value of session
     express.session[key] = value
-
-express.io = io
 
 express.application.http = ->
     @server = http.createServer this
@@ -89,7 +89,6 @@ class SimpleRoom
             @socket.broadcast.to(@name).emit event, message
         else
             @socket.in(@name).emit event, message
-        
 
 class SimpleSocket
     constructor: (socket) ->
