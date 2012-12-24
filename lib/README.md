@@ -15,7 +15,7 @@ Otherwise refer to the express docs:
 
 [Express Docs](http://expressjs.com/api.html)
 
-## Express App
+## ExpressApp
 
 ```js
 app = require('express.io')()
@@ -27,75 +27,87 @@ app = require('express.io')()
 * `app.https(options)` - starts an https server, returns `app`
 * `app.io()` - starts a socket.io server, returns `app`
 
-## App IO 
+## AppIO 
+
+The io object for the entire app.  Used to manage and manipulate clients.
 
 ```js
-app.io 
+app.io.broadcast('hey', {this: 'goes to everyone!'})
+app.io.room('hipster').broadcast('meh', {this: 'goes to all hipsters'})
+app.io.route('special', function(req) {
+    // do something with req
+})
 ```
 
 __Note__:  You must call `app.io()` before using.
 
 ### Properties
 
-* `app.io.brodcast(event, data)` - 
-* `app.io.route(event, callback)` - Takes a route name and a callback.  The callback passes a socket request object.  
-* `app.io.room(room)` - gets the room
+* `app.io.brodcast(event, data)` - Broadcast the `event` and `data` to all clients.
+* `app.io.room(room).broadcast(event, data)` - Broadcast the `event` and `data` only to clients in the `room`.
+* `app.io.route(event, callback)` - Takes a `route` name and a `callback`.  The callback passes `req`, which is a SocketRequest object.
+* `app.io.set(property, value)` - Set a global socket.io property.
+* `app.io.configure(environment)` - Similar to the `app.configure` method for express.
 
-## Socket Request Object
+## SocketRequest
 
 This object appears in the socket.io routes.
 
 ```js
 app.io.route('hello', function(req) {
-    console.log('Hi!, ' + req)
+    req.data
+    req.io
+    req.headers
+    res.session
+    req.handshake
+    req.socket
 })
 ```
 
 ### Properties
 
-* `req.data` - the data sent from the socket
-* `req.io` - the simple socket for the request
-* `req.headers` - headers form the initial request
-* `req.session` - session object if available
-* `req.handshake` - socket.io handshake data
-* `req.socket` - the socket for the request
-* `req.respond(data)` - sends the acknowledgment 
+* `req.data` - The `data` sent from the client request.
+* `req.io` - The simple socket for the request.
+* `req.headers` - `headers` from the initial web socket request.
+* `req.session` - If you have sessions, then this is the express `session` object.
+* `req.handshake` - This is the socket.io `handshake` data.
+* `req.socket` - The actual socket.io `socket`. Please use `req.io` instead.
 
-## Simple Socket Object
+## RequestIO
 
 ```js
-req.io
+app.io.route('example', function(req) {
+    req.io.emit('event', {this: 'is sent as an event to the client'})
+    req.io.broadcast('shout-out', {this: 'goes to every client, except this one'})
+    req.io.respond({sends: 'this data back to the client as an acknowledgment'})
+    req.io.join('hipster') // joins the nerds room
+    req.io.leave('hipster') // leaves the nerds room
+    req.io.room('hipster').broadcast('hey', {this: 'goes to every hipster'})
+     
+})
 ```
 
 ### Properties
 
-* `req.io.broadcast(event, data)` - broadcast to all clients except this one
-* `req.io.room(room)` - grab a room to broadcast to, similar to the method above
-* `req.io.join(room)` - join a room
-* `req.io.leave(room)` - leave a room
-* `req.io.emit(event, data)` - send an event to this socket.
-* `req.io.respond(data)` - send acknowledgment response back to socket
+* `req.io.emit(event, data)` - Send an `event` with `data` to this client.
+* `req.io.respond(data)` - Sends the acknowledgment `data` back to the client.
+* `req.io.broadcast(event, data)` - Broadcast to all clients except this one.
+* `req.io.room(room).broadcast(event,data)` - Broadcast to the specified `room`, the `event` and `data`.  Every client in the `room` except the one making the request, receives this `event`.
+* `req.io.join(room)` - Make the client join the specified `room`.
+* `req.io.leave(room)` - Make the client leave the specified `room`.
 
-## Simple Room Object
+### Reserved Events
 
-The room object can be either from the AppIO object or it can be from a RequestIO.  If it is from the AppIO object then it would work like this:
+* `connect`
+* `connecting`
+* `disconnect`
+* `connect_failed`
+* `error`
+* `message`
+* `reconnect_failed`
+* `reconnect`
+* `reconnecting`
 
-```js
-room = app.io.room('cheers')
-room.broadcast('hey', {
-    message: 'would go to everyone in this room'
-})
-```
-If it's from the RequestIO object, then it would broadcast to everyone but itself.
-
-```js
-app.io.route('fun', function(req) {
-    room = req.io.room('nerds')
-    room.broadcast('new nerd', {
-        this: 'will go to everyone except this client'
-    })
-})
-```
-
+View the socket.io docs for [details on these events.](https://github.com/LearnBoost/socket.io/wiki/Exposed-events)
 
 
