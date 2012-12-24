@@ -1,7 +1,7 @@
 
 # Express.io API Reference
 
-Here is 
+Here is an API reference.  I __strongly recommend__ that you read through the [examples]().  They all work, and they are written out very clearly with both client and server pieces.  This is just a reference and does not contain "copy paste" examples.  
 
 ## ExpressIO
 
@@ -9,16 +9,12 @@ Here is
 express = require('express.io')
 ```
 
-### New Properties
+### Properties
 
-* `express()` - Returns a new `ExpressApp` object.
+* `express()` - Creates a new app object.
 * `express.io` - The socket.io object.
 
-Otherwise refer to the express docs:
-
-[Express Docs](http://expressjs.com/api.html)
-
-## ExpressIOApp
+## ExpressApp
 
 ```js
 app = require('express.io')()
@@ -44,7 +40,7 @@ app.io.route('special', function(req) {
 })
 ```
 
-You can also use the `AppIO` object to configure your io server.  For available options, check out the [docs](https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO).
+You can also use the `AppIO` object to configure your io server.  For available options, check [here](https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO).
 
 ```js
 app.io.configure(function() {
