@@ -30,7 +30,6 @@ express.application.https = (options) ->
 
 express.application.io = (options) ->
     @io = io.listen @server
-    @io = @io.of options.namespace if options?.namespace?
     @io.router = new Object
     @io.route = (route, next) ->
        @router[route] = next
@@ -56,6 +55,15 @@ express.application.io = (options) ->
         new SimpleRoom(room, @io.sockets)
     return this
 
+listen = express.application.listen
+express.application.listen = ->
+    args = Array.prototype.slice.call arguments, 0
+    if @server?
+        @server.listen.apply @server, args
+    else
+        listen.apply this, args
+        
+
 initRoutes = (socket, router) ->
     setRoute = (key, value) ->
         socket.on key, (data, next) ->
@@ -72,14 +80,6 @@ initRoutes = (socket, router) ->
     for key, value of router
         setRoute(key, value)
 
-listen = express.application.listen
-express.application.listen = ->
-    args = Array.prototype.slice.call arguments, 0
-    if @server?
-        @server.listen.apply @server, args
-    else
-        listen.apply this, args
-        
 class SimpleRoom
     constructor: (name, socket) ->
         @name = name
