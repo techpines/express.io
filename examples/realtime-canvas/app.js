@@ -7,7 +7,7 @@ app.use(express.static(__dirname))
 
 // Broadcast all draw clicks.
 app.io.route('drawClick', function(req) {
-    req.socket.broadcast.emit('draw', req.body)
+    req.socket.broadcast.emit('draw', req.data)
 })
 
 app.get('/', function(req, res) {

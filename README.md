@@ -1,8 +1,27 @@
 # express.io
-the realtime-web framework for node.js
+realtime-web framework for node.js
 
 ```coffeescript
 express.io = express + socket.io
+```
+
+## Simple App Setup
+
+Here is the cannonical express.io example.
+
+```javascript
+app = require('express.io')()
+app.http().io()
+
+//build your realtime-web app
+
+app.listen(7076)
+```
+
+or go one-liner style
+
+```js
+require('express.io')().http().io().listen(7076)
 ```
 
 ## Upgrade your existing Express apps with Socket.io
@@ -27,28 +46,14 @@ require('express.io')
 
 Your app should run just the same as before, except now you're ready for reatltime.  Express.io is a superset of express and socket.io!
 
-## Simple App Setup
-
-Here is the cannonical express.io example.
-
-```javascript
-app = require('express.io')
-app.http().io()
-
-//build your realtime-web app
-
-app.listen(7076)
-```
-
-or go one-liner style
-
-```js
-require('express.io')().http().io().listen(7076)
-```
 
 ## Examples
 
 [Tons of Working Examples](somewhere)
+
+## API Reference
+
+[API Reference](ref)
 
 ## FAQ
 

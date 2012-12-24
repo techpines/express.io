@@ -1,6 +1,6 @@
 {
     "name": "express.io",
-    "version": "1.0.2",
+    "version": "1.0.5",
     "description": "realtime-web app framework",
     "author": "Brad Carleton <brad@techpines.com>",
     "repository": "git://github.com/techpines/express.io",
