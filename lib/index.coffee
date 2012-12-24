@@ -112,5 +112,8 @@ class SimpleSocket
     on: (event, callback) ->
         @socket.on event, callback
 
+    disconnect: (callback) ->
+        @socket.disconnect(callback)
+
 
 module.exports = express

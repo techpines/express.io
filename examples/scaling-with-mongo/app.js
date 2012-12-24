@@ -10,7 +10,9 @@ numCPUs = require('os').cpus().length;
 workers = function() {
     app = express().http().io()
 
-    app.io.set('store', new MongoStore({url: mongoUrl}))
+    app.io.configure(function() {
+        app.io.set('store', new MongoStore())
+    })
 
     // TODO: build realtime-web app
 
