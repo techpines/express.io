@@ -44,11 +44,31 @@ Your app should run just the same as before.  Express.io is a superset of expres
 
 ## Examples
 
-[Tons of Working Examples](https://github.com/techpines/express.io/tree/master/examples#readme)
+
+__All of these examples work.__  I repeat, __they all work__.  Express.io is a very simple framework that allows you to build incredibly complex realtime apps with very little code.
+
+[All Examples](https://github.com/techpines/express.io/tree/master/examples#readme)
+
+Or view them bite size:
+
+[Simple HTTP + IO Setup]()
+[Simple HTTPS + IO Setup]()
+[Routing]()
+[Rooms]()
+[Broadcasting]()
+[Acknowledgements]()
+[Realtime Canvas]()
+[Scaling with Redis]()
 
 ## API Reference
 
 [API Reference](https://github.com/techpines/express.io/tree/master/lib#readme)
+
+[ExpressIO]()
+[ExpressApp]()
+[AppIO]()
+[SocketReques]()
+[RequestIO]()
 
 ## FAQ
 
