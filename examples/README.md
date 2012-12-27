@@ -216,7 +216,7 @@ This is a realtime canvas example.  If you draw on the canvas with two browser w
 This example is really cool, and it works right of the box, so give it a try!
 
 
-#### Server
+#### Server (app.js)
 
 ```js
 express = require('express.io')
@@ -237,7 +237,7 @@ app.get('/', function(req, res) {
 app.listen(7076)
 ```
 
-#### Client
+#### Client (client.html)
 
 ```html
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -289,7 +289,7 @@ If you need to scale your socket.io server past one process, (which hopefully yo
 
 You need to install redis on you machine for this to run, but it's pretty simple and well worth it.
 
-#### Server
+#### Server (app.js)
 
 ```js
 express = require('express.io')
