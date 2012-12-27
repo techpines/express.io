@@ -73,6 +73,7 @@ express.application.io = (options) ->
                             response.json.apply response, args
                         route: (route) =>
                             @io.route route, ioRequest, trigger: true
+                        data: request.body
                     @io.route route, ioRequest, trigger: true
                 broadcast: @io.broadcast
             next()

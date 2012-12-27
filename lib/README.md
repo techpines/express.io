@@ -1,7 +1,7 @@
 
-# Express.io API Reference
+# API Reference
 
-Here is an API reference.  I __strongly recommend__ that you read through the [examples]().  They all work, and they are written out very clearly with both client and server pieces.  This is just a reference and does not contain "copy paste" examples.  
+I __strongly recommend__ that you read through the [examples]().  They all work, and they are written out very clearly with both client and server pieces.  This is just a reference and does not contain "copy paste" examples.  
 
 ## ExpressIO
 
@@ -92,6 +92,7 @@ app.io.route('example', function(req) {
     req.io.join('hipster') // joins the hipster room
     req.io.leave('hipster') // leaves the hipster room
     req.io.room('hipster').broadcast('hey', {this: 'goes to every hipster'})
+    req.io.route('some-other-route')
      
 })
 ```
@@ -104,6 +105,7 @@ app.io.route('example', function(req) {
 * `req.io.room(room).broadcast(event,data)` - Broadcast to the specified `room`, the `event` and `data`.  Every client in the `room` except the one making the request, receives this `event`.
 * `req.io.join(room)` - Make the client join the specified `room`.
 * `req.io.leave(room)` - Make the client leave the specified `room`.
+* `req.io.route(route)` - Forwards the `req` to the given `route`.
 
 ### Reserved Events
 

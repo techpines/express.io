@@ -1,7 +1,9 @@
 
 # Express.io Examples
 
-All of our examples work on node 0.8.x and 0.6.x, although less testing has been done. Please run through the examples first if you get stuck.  They will help. To get started run the following commands:
+__All of these examples work__ on node 0.8.x and 0.6.x, although less testing has been done. Please run through the examples.  They will help. 
+
+To get started run the following commands:
 
 ```bash
 git clone git://github.com/techpines/express.io
@@ -15,14 +17,12 @@ Then `cd` into an example directory and run:
 node app.js
 ```
 
-## Simple HTTP + IO
+## Simple HTTP + IO Setup
 
 This is the canonical express.io example.  It does nothing, except set up 
 an HTTP server and an IO server together.
 
-* __Copy Paste__: Yes
-* __Instructions__: `node app.js`
-* __Results__: Should run.
+#### app.js
 
 ```js
 app = require('express.io')()
@@ -33,13 +33,11 @@ app.http().io()
 app.listen(7076)
 ```
 
-## Simple HTTPS + Socket.io
+## Simple HTTPS + IO Setup
 
 This is the same as the HTTP example, but for HTTPS.  You have to pass the key and cert contents as an option.
 
-* __Copy Paste__: No (need cert and key files)
-* __Instructions__: `node app.js`
-* __Results__: Should run.
+#### app.js
 
 ```js
 fs = require('fs')
@@ -56,16 +54,11 @@ app.https(options).io()
 app.listen(7076)
 ```
 
-## Simple Example Using Routes
+## Routing
 
 Express.io comes with a simple io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives an io request object.
 
-* __Copy Paste__: Yes
-* __Instructions__: `node app.js`, then go to http://localhost:7076 in a browser
-* __Results__: Server should say, "Socket says client is happy"
-
-
-#### Server
+#### app.js
 
 ```js
 app = require('express.io')()
@@ -84,7 +77,7 @@ app.get('/', function(req, res) {
 app.listen(7076)
 ```
 
-#### Client
+#### client.html
 
 ```html
 <script src="/socket.io/socket.io.js"></script>
@@ -96,7 +89,42 @@ socket.emit('hello', {hello: 'client is happy'})
 </script>
 ```
 
-## Using Sessions
+## Route Forwarding
+
+You can also forward routes from on io request to another, and even from a web request to another.
+
+You just use `req.io.route(route)` to forward the current request.
+
+In the following example, a route is a passed from an initial web request through to io routes, until finally back to the user.
+
+#### app.js
+
+```js
+app = require('express.io')()
+app.http().io()
+
+// Initial web request.
+app.get('/', function(req, res) {
+    // Forward to an io route.
+    req.io.route('hello')  
+})
+
+// Forward io route to another io route.
+app.io.route('hello', function(req) {
+    req.io.route('hello-again')
+})
+
+// Sends respone from io route.
+app.io.route('hello-again', function(req) {
+    req.io.respond({hello: 'from io route'})
+})
+
+app.listen(7076)
+```
+
+__Note__: When you forward http requests to io routes, `req.io.respond(data)` will call `res.json(data)` on the actual http request.  This makes sense because http routes require a response, and the `respond` method is supposed to be a response for the given request.
+
+## Sessions
 
 Sessions are setup as you would normally do with express!  Nothing different.  When you start making io requests, you will have access to the express session.  Use it to store user data, or for authentication, whatever.
 
@@ -135,6 +163,36 @@ app.get('/', function(req, res) {
 app.listen(7076)
 ```
 
+## Broadcasting
+
+## Acknowledgements
+
+#### app.js
+
+```js
+app = require('express.io')
+app.http().io()
+
+app.io.route('chat', function(req) {
+    console.log(req.data)
+    req.io.respond({thanks: 'for chatting'})
+})
+
+app.listen(7076)
+```
+
+#### client.html
+
+```html
+<script src="/socket.io/socket.io.js"></script>
+<script>
+io = io.connect()
+
+io.emit('chat', {hey: 'server'}, function(data) {
+    alert(data)
+})
+</script>
+```
 ## Realtime Canvas
 
 This is a realtime canvas example.  If you draw on the canvas with two browser windows open you will see how socket.io broadcast works.

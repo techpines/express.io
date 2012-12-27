@@ -1,0 +1,8 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+io = io.connect()
+
+io.emit('chat', {message: 'hey server'}, function(data) {
+    alert(data.message)
+})
+</script>

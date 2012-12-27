@@ -8,17 +8,12 @@ app.get('/', function(req, res) {
     req.io.route('hello')  
 })
 
-// Initial web request.
-app.get('/blue-cheese', function(req, res) {
-    res.sendfile(__dirname + '/client.html')
-})
-
+// Forward io route to another io route.
 app.io.route('hello', function(req) {
-    // Forward io request route to another io request.
     req.io.route('hello-again')
 })
 
-// Response from io request.
+// Sends respone from io route.
 app.io.route('hello-again', function(req) {
     req.io.respond({hello: 'from io route'})
 })
