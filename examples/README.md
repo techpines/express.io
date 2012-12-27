@@ -58,6 +58,8 @@ app.listen(7076)
 
 ## Routing
 
+[Get the code.](https://github.com/techpines/express.io/tree/master/examples/routing)
+
 Express.io comes with a simple io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives an io request object.
 
 #### Server (app.js)
