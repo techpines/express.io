@@ -44,17 +44,17 @@ Your app should run just the same as before.  Express.io is a superset of expres
 
 ## Examples
 
-[Tons of Working Examples](somewhere)
+[Tons of Working Examples](https://github.com/techpines/express.io/tree/master/examples#readme)
 
 ## API Reference
 
-[API Reference](ref)
+[API Reference](https://github.com/techpines/express.io/tree/master/lib#readme)
 
 ## FAQ
 
 Have frequent questions, we have frequent answers.
 
-[Bring me FAQ](toad)
+[Bring me FAQ](https://github.com/techpines/express.io/tree/master/docs/faq.md)
 
 ## Contrib Shout Out
 
