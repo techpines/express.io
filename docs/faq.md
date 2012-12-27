@@ -13,14 +13,20 @@ Express.io is a super set of of express and socket.io.  You get all the convenie
 
 YES!  I went through and painstakingly tested all of the examples.  I noticed that there are tons of example snippets of express and socket.io, that are missing lines of code, or are just plain wrong. 
 
+## Is this an MVC framework? or Why isn't this an MVC framework?
+
+This is not an mvc framework.  This is a simple minimalist combination of two incredible technologies.
+
+If you want mvc, then might I offer a few sugestions:
+
+* [Meteor](http://meteor.com/)
+* [Derby](http://derbyjs.com/)
+* [Sails](http://sailsjs.com/)
+* [SocketStream](http://www.socketstream.org)
 
 ## Why coffeescript?
 
 If it wasn't for coffeescript, I would not be coding in node.js.  Period.  All of the examples in the documentation are written in what I call "lazy javascript".  It's javascript that is not the best from a coding perspective, (I don't use `var` etc.).  The point is to be as simple and concise from an example perspective, yet still produce workable code.
 
 Give your curly brace turd language a rest, and put your big boy pants on. :)
-
-
-## How do sessions work?
-
 
