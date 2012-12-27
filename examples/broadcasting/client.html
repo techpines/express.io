@@ -3,9 +3,8 @@
 <script>
 io = io.connect()
 
-io.emit('poop')
-io.on('new-user', function() {
-    alert('new user')
+io.on('new visitor', function() {
+    alert('server says, new visitor came!')
 })
 
 </script>
