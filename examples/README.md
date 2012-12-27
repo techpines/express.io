@@ -1,7 +1,7 @@
 
 # Express.io Examples
 
-All of our examples work on node 0.8.x.  To get started run the following commands:
+All of our examples work on node 0.8.x and 0.6.x, although less testing has been done. Please run through the examples first if you get stuck.  They will help. To get started run the following commands:
 
 ```bash
 git clone git://github.com/techpines/express.io
@@ -15,12 +15,14 @@ Then `cd` into an example directory and run:
 node app.js
 ```
 
-Enjoy!
+## Simple HTTP + IO
 
-## Simple HTTP + Socket.io
+This is the canonical express.io example.  It does nothing, except set up 
+an HTTP server and an IO server together.
 
-This is the cannonical express.io example.  It does nothing, except set up 
-an HTTP server and a Socket.io server together.
+* __Copy Paste__: Yes
+* __Instructions__: `node app.js`
+* __Results__: Should run.
 
 ```js
 app = require('express.io')()
@@ -34,6 +36,10 @@ app.listen(7076)
 ## Simple HTTPS + Socket.io
 
 This is the same as the HTTP example, but for HTTPS.  You have to pass the key and cert contents as an option.
+
+* __Copy Paste__: No (need cert and key files)
+* __Instructions__: `node app.js`
+* __Results__: Should run.
 
 ```js
 fs = require('fs')
@@ -52,7 +58,12 @@ app.listen(7076)
 
 ## Simple Example Using Routes
 
-Express.io comes with a simple Socket.io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives a Socket.io request object.
+Express.io comes with a simple io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives an io request object.
+
+* __Copy Paste__: Yes
+* __Instructions__: `node app.js`, then go to http://localhost:7076 in a browser
+* __Results__: Server should say, "Socket says client is happy"
+
 
 #### Server
 
@@ -62,7 +73,7 @@ app.http().io()
 
 // Setup the hello route.
 app.io.route('hello', function(req) {
-    console.log('Socket says ' + req.body.hello)
+    console.log('Socket says ' + req.data.hello)
 })
 
 // Send the client html.
@@ -87,9 +98,9 @@ socket.emit('hello', {hello: 'client is happy'})
 
 ## Using Sessions
 
-Sessions are setup as you would normally do with express!  Nothing different.  When you start making socket.io requests then you will have access to the express session.  Use it to store user data, or for authentication, whatever.
+Sessions are setup as you would normally do with express!  Nothing different.  When you start making io requests, you will have access to the express session.  Use it to store user data, or for authentication, whatever.
 
-Note that you need to save the session explicitly for socket.io requests, because there is no guarantee of a response, unlike a noraml http request.
+__Note__: You need to save the session explicitly for io requests, because there is no guarantee of a response, unlike a normal http request.
 
 ```js
 express = require('express.io')
