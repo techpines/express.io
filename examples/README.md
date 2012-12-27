@@ -37,6 +37,8 @@ app.listen(7076)
 
 ## Simple HTTPS + IO Setup
 
+[Get the code.](https://github.com/techpines/express.io/tree/master/examples/https-io)
+
 This is the same as the HTTP example, but for HTTPS.  You have to pass the key and cert contents as an option.
 
 #### Server (app.js)
@@ -95,13 +97,15 @@ socket.emit('hello', {hello: 'client is happy'})
 
 ## Route Forwarding
 
+[Get the code.](https://github.com/techpines/express.io/tree/master/examples/route-forwarding)
+
 You can also forward routes from on io request to another, and even from a web request to another.
 
 You just use `req.io.route(route)` to forward the current request.
 
 In the following example, a route is a passed from an initial web request through to io routes, until finally back to the user.
 
-#### app.js
+#### Server (app.js)
 
 ```js
 app = require('express.io')()
@@ -129,6 +133,8 @@ app.listen(7076)
 __Note__: When you forward http requests to io routes, `req.io.respond(data)` will call `res.json(data)` on the actual http request.  This makes sense because http routes require a response, and the `respond` method is supposed to be a response for the given request.
 
 ## Sessions
+
+[Get the code.](https://github.com/techpines/express.io/tree/master/examples/sessions)
 
 Sessions are setup as you would normally do with express!  Nothing different.  When you start making io requests, you will have access to the express session.  Use it to store user data, or for authentication, whatever.
 
@@ -169,9 +175,13 @@ app.listen(7076)
 
 ## Broadcasting
 
+[Get the code.](https://github.com/techpines/express.io/tree/master/examples/broadcasting)
+
 ## Acknowledgements
 
-#### app.js
+[Get the code.](https://github.com/techpines/express.io/tree/master/examples/acknowledgements)
+
+#### Server (app.js)
 
 ```js
 app = require('express.io')
@@ -185,7 +195,7 @@ app.io.route('chat', function(req) {
 app.listen(7076)
 ```
 
-#### client.html
+#### Client (client.html)
 
 ```html
 <script src="/socket.io/socket.io.js"></script>
@@ -198,6 +208,8 @@ io.emit('chat', {hey: 'server'}, function(data) {
 </script>
 ```
 ## Realtime Canvas
+
+[Get the code.](https://github.com/techpines/express.io/tree/master/examples/realtime-canvas)
 
 This is a realtime canvas example.  If you draw on the canvas with two browser windows open you will see how socket.io broadcast works.
 
@@ -270,6 +282,8 @@ app.listen(7076)
 ```
 
 ## Scaling your Socket.io for Multi-Process with Redis
+
+[Get the code.](https://github.com/techpines/express.io/tree/master/examples/scaling-with-redis)
 
 If you need to scale your socket.io server past one process, (which hopefully you will).  Then you need to take advantage of a pub/sub server.  Here is an example using Redis with multiple processes.
 
