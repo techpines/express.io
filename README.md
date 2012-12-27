@@ -75,7 +75,7 @@ cd express.io/examples
 npm install
 ```
 
-Then you'll be ready to run the example code with simply:
+Then you'll be ready to run the example code with a simple:
 
 ```
 node app.js
@@ -83,17 +83,17 @@ node app.js
 
 ## API Reference
 
+This should help you get a birds eye view of the __express.io__ architecture.  Simple and lean.  Reuse your express and socket.io knowledge.
+
 [API Reference](https://github.com/techpines/express.io/tree/master/lib#readme)
 
-[ExpressIO]()
+Here are all the wonderful __express.io__ objects!
 
-[ExpressApp]()
-
-[AppIO]()
-
-[SocketReques]()
-
-[RequestIO]()
+* [ExpressIO](https://github.com/techpines/express.io/tree/master/lib#expressio)
+* [ExpressApp](https://github.com/techpines/express.io/tree/master/lib#expressapp)
+* [AppIO](https://github.com/techpines/express.io/tree/master/lib#appio)
+* [SocketRequest](https://github.com/techpines/express.io/tree/master/lib#socketrequest)
+* [RequestIO](https://github.com/techpines/express.io/tree/master/lib#requestio)
 
 ## FAQ
 
@@ -103,9 +103,8 @@ Have frequent questions, we have frequent answers.
 
 ## Contrib Shout Out
 
-Hey this thing is open source, so give a contrib shout out.
+[Fork](https://github.com/techpines/express.io/fork_select) this bad boy, edit the `CONTRIB` file with your github handle and a short message, then make a pull request.
 
-[Fork]() this bad boy, edit the `CONTRIB` file with your github handle and a short message, then make a pull request.
 
 ### CONTRIB
 ```twitter
