@@ -52,22 +52,47 @@ __All of these examples work.__  I repeat, __they all work__.  Express.io is a v
 Or view them bite size:
 
 [Simple HTTP + IO Setup]()
+
 [Simple HTTPS + IO Setup]()
+
 [Routing]()
+
 [Rooms]()
+
 [Broadcasting]()
+
 [Acknowledgements]()
+
 [Realtime Canvas]()
+
 [Scaling with Redis]()
+
+To run the examples from git, do the following:
+
+```js
+git clone https://github.com/techpines/express.io
+cd express.io/examples
+npm install
+```
+
+Then you'll be ready to run the example code with simply:
+
+```
+node app.js
+```
 
 ## API Reference
 
 [API Reference](https://github.com/techpines/express.io/tree/master/lib#readme)
 
 [ExpressIO]()
+
 [ExpressApp]()
+
 [AppIO]()
+
 [SocketReques]()
+
 [RequestIO]()
 
 ## FAQ
