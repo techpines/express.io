@@ -51,21 +51,14 @@ __All of these examples work.__  I repeat, __they all work__.  Express.io is a v
 
 Or view them bite size:
 
-[Simple HTTP + IO Setup]()
-
-[Simple HTTPS + IO Setup]()
-
-[Routing]()
-
-[Rooms]()
-
-[Broadcasting]()
-
-[Acknowledgements]()
-
-[Realtime Canvas]()
-
-[Scaling with Redis]()
+* [Simple HTTP + IO Setup](https://github.com/techpines/express.io/tree/master/examples/http-io)
+* [Simple HTTPS + IO Setup](https://github.com/techpines/express.io/tree/master/examples/https-io)
+* [Routing](https://github.com/techpines/express.io/tree/master/examples/routing)
+* [Rooms](https://github.com/techpines/express.io/tree/master/examples/rooms)
+* [Broadcasting](https://github.com/techpines/express.io/tree/master/examples/broadcasting)
+* [Acknowledgements](https://github.com/techpines/express.io/tree/master/examples/acknowledgements)
+* [Realtime Canvas](https://github.com/techpines/express.io/tree/master/examples/realtime-canvas)
+* [Scaling with Redis](https://github.com/techpines/express.io/tree/master/examples/scaling-with-redis)
 
 To run the examples from git, do the following:
 

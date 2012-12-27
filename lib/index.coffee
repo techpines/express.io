@@ -56,7 +56,7 @@ express.application.io = (options) ->
         @io.sockets.emit.apply @io.sockets, args
 
     @io.room = (room) =>
-        new SimpleRoom(room, @io.sockets)
+        new RoomIO(room, @io.sockets)
 
     @stack.push
         route: ''
@@ -103,14 +103,14 @@ initRoutes = (socket, io) ->
                 headers: socket.handshake.headers
                 cookies: socket.handshake.cookies
                 handshake: socket.handshake
-            request.io = new SimpleSocket(socket, request, io)
+            request.io = new RequestIO(socket, request, io)
             request.io.respond = respond
             request.io.respond ?= ->
             callback request
     for key, value of io.router
         setRoute(key, value)
 
-class SimpleRoom
+class RoomIO
     constructor: (name, socket) ->
         @name = name
         @socket = socket
@@ -120,7 +120,7 @@ class SimpleRoom
         else
             @socket.in(@name).emit event, message
 
-class SimpleSocket
+class RequestIO
     constructor: (socket, request, io) ->
         @socket = socket
         @request = request
@@ -133,7 +133,7 @@ class SimpleSocket
         @socket.emit(event, message)
     
     room: (room) ->
-        new SimpleRoom(room, @socket)
+        new RoomIO(room, @socket)
 
     join: (room) ->
         @socket.join(room)

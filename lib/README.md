@@ -1,7 +1,7 @@
 
 # API Reference
 
-I __strongly recommend__ that you read through the [examples](https://github.com/techpines/express.io/tree/master/examples#readme).  They all work, and they are written out very clearly with both client and server pieces.  This is just a reference and does not contain "copy paste" examples.  
+This gives details on the new top level objects for __express.io__.   
 
 ## ExpressIO
 
