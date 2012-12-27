@@ -1,20 +1,27 @@
 
-app = require('express.io')()
+app = require('../../../express.io')()
 app.http().io()
 
-// Initial request with redirect.
+// Initial web request.
 app.get('/', function(req, res) {
+    // Forward to an io route.
     req.io.route('hello')  
 })
 
-// First redirect from web route to io route.
-app.io.route('hello', function(req) {
-    req.io.route('goodbye')
+// Initial web request.
+app.get('/blue-cheese', function(req, res) {
+    res.sendfile(__dirname + '/client.html')
 })
 
-// Second redirect from io route to io route.
-app.io.route('goodbye', function(req) {
+app.io.route('hello', function(req) {
+    // Forward io request route to another io request.
+    req.io.route('hello-again')
+})
+
+// Response from io request.
+app.io.route('hello-again', function(req) {
     req.io.respond({hello: 'from io route'})
 })
 
 app.listen(7076)
+

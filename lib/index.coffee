@@ -31,8 +31,9 @@ express.application.https = (options) ->
 express.application.io = (options) ->
     @io = io.listen @server
     @io.router = new Object
-    @io.route = (route, next) ->
-       @router[route] = next
+    @io.route = (route, next, options) ->
+        return @router[route] next if options?.trigger is true
+        @router[route] = next
     @io.configure => @io.set 'authorization', (data, next) =>
         return next null, true unless sessionConfig.store?
         cookieParser = express.cookieParser()
@@ -46,14 +47,40 @@ express.application.io = (options) ->
                 data.session = new connect.session.Session data, session
                 data.sessionStore = sessionConfig.store
                 next null, true
+
     @io.sockets.on 'connection', (socket) =>
-        initRoutes socket, @io.router
+        initRoutes socket, @io
+
     @io.broadcast = =>
         args = Array.prototype.slice.call arguments, 0
         @io.sockets.emit.apply @io.sockets, args
+
     @io.room = (room) =>
         new SimpleRoom(room, @io.sockets)
+
+    @stack.push
+        route: ''
+        handle: (request, response, next) =>
+            request.io =
+                route: (route) =>
+                    ioRequest = new Object
+                    for key, value of request
+                        ioRequest[key] = value
+                    ioRequest.io =
+                        broadcast: @io.broadcast
+                        respond: =>
+                            args = Array.prototype.slice.call arguments, 0
+                            response.json.apply response, args
+                        route: (route) =>
+                            @io.route route, ioRequest, trigger: true
+                    @io.route route, ioRequest, trigger: true
+                broadcast: @io.broadcast
+            next()
+
     return this
+
+setupRequest = (io) ->
+    
 
 listen = express.application.listen
 express.application.listen = ->
@@ -64,20 +91,22 @@ express.application.listen = ->
         listen.apply this, args
         
 
-initRoutes = (socket, router) ->
-    setRoute = (key, value) ->
-        socket.on key, (data, next) ->
-            value
+initRoutes = (socket, io) ->
+    setRoute = (key, callback) ->
+        socket.on key, (data, respond) ->
+            request =
                 data: data
-                io: new SimpleSocket(socket)
                 session: socket.handshake.session
                 sessionID: socket.handshake.sessionID
                 socket: socket
                 headers: socket.handshake.headers
                 cookies: socket.handshake.cookies
                 handshake: socket.handshake
-            , next
-    for key, value of router
+            request.io = new SimpleSocket(socket, request, io)
+            request.io.respond = respond
+            request.io.respond ?= ->
+            callback request
+    for key, value of io.router
         setRoute(key, value)
 
 class SimpleRoom
@@ -91,26 +120,32 @@ class SimpleRoom
             @socket.in(@name).emit event, message
 
 class SimpleSocket
-    constructor: (socket) ->
+    constructor: (socket, request, io) ->
         @socket = socket
+        @request = request
+        @manager = io
     
     broadcast: (event, message) ->
         @socket.broadcast.emit(event, message)
     
     emit: (event, message) ->
         @socket.emit(event, message)
-
+    
     room: (room) ->
         new SimpleRoom(room, @socket)
 
     join: (room) ->
         @socket.join(room)
 
+    route: (route) ->
+        @manager.route route, @request, trigger: true
+
     leave: (room) ->
         @socket.leave(room)
 
-    on: (event, callback) ->
-        @socket.on event, callback
+    on: ->
+        args = Array.prototype.slice.call arguments, 0
+        @sockets.on.apply @socket, args
 
     disconnect: (callback) ->
         @socket.disconnect(callback)
