@@ -22,7 +22,7 @@ node app.js
 This is the canonical express.io example.  It does nothing, except set up 
 an HTTP server and an IO server together.
 
-#### app.js
+#### SERVER (app.js)
 
 ```js
 app = require('express.io')()
@@ -37,7 +37,7 @@ app.listen(7076)
 
 This is the same as the HTTP example, but for HTTPS.  You have to pass the key and cert contents as an option.
 
-#### app.js
+#### SERVER (app.js)
 
 ```js
 fs = require('fs')
@@ -58,7 +58,7 @@ app.listen(7076)
 
 Express.io comes with a simple io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives an io request object.
 
-#### app.js
+#### SERVER (app.js)
 
 ```js
 app = require('express.io')()
@@ -77,7 +77,7 @@ app.get('/', function(req, res) {
 app.listen(7076)
 ```
 
-#### client.html
+#### CLIENT (client.html)
 
 ```html
 <script src="/socket.io/socket.io.js"></script>
