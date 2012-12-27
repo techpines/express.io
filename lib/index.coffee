@@ -80,9 +80,6 @@ express.application.io = (options) ->
 
     return this
 
-setupRequest = (io) ->
-    
-
 listen = express.application.listen
 express.application.listen = ->
     args = Array.prototype.slice.call arguments, 0
