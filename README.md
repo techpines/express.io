@@ -1,4 +1,4 @@
-![express.io](http://cdn.techpines.io/express.io.png)
+![express.io](http://cdn.techpines.io/express.io-black.png)
 
 realtime-web framework for node.js
 
