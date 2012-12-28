@@ -3,7 +3,7 @@
 __This is a copy-paste example.__
 
 This is the canonical __express.io__ example.  It does nothing, except set up
-an HTTP server and an IO server together on the same port.
+an HTTP server and an io server together on the same port.
 
 When you run this example, the server should start.
 

@@ -22,7 +22,7 @@ node app.js
 __This is a copy-paste example.__ [(get the code)](https://github.com/techpines/express.io/tree/master/examples/http-io)
 
 This is the canonical __express.io__ example.  It does nothing, except set up 
-an HTTP server and an IO server together on the same port.
+an http server and an io server together on the same port.
 
 When you run this example, the server should start.
 
@@ -205,7 +205,7 @@ io.on('new visitor', function() {
 
 __This is a copy-paste example.__ [(get the code)](https://github.com/techpines/express.io/tree/master/examples/sessions)
 
-In __express.io__, sessions are shared between web requests and IO requests.  This makes it a breeze to share a little state or perform authentication.  You setup your sessions exactly as you would with express, and all the magic is handled for you!
+In __express.io__, sessions are shared between web requests and io requests.  This makes it a breeze to share a little state or perform authentication.  You setup your sessions exactly as you would with express, and all the magic is handled for you!
 
 For this example, go to `localhost:7076`, and you will be prompted by a few questions, and the server will prove the sessions are working.
 
@@ -270,7 +270,7 @@ app.listen(7076)
 </script>
 ```
 
-__Note__: You need to save the session explicitly for IO requests, because there is no guarantee of a response, unlike a normal http request.
+__Note__: You need to save the session explicitly for io requests, because there is no guarantee of a response, unlike a normal http request.
 
 ## Rooms
 
@@ -333,7 +333,7 @@ io.on('announce', function(data) {
 
 __This is a copy-paste example.__ [(get the code)](https://github.com/techpines/express.io/tree/master/examples/acknowledgements)
 
-Sometimes you need confirmation or acknowledgement from the server for an IO request.  To respond from the server you need to call  `req.io.respond(data)`.
+Sometimes you need confirmation or acknowledgement from the server for an io request.  To respond from the server you need to call  `req.io.respond(data)`.
 
 For this example, go to `localhost:7076` and you should get a pop-up from the acknowledgement. 
 
@@ -379,10 +379,9 @@ In a way, the acknowledgements are a little more old-fashioned, pushing you towa
 
 __This is a copy-paste example.__ [(get the code)](https://github.com/techpines/express.io/tree/master/examples/realtime-canvas)
 
-This is a realtime canvas example.  If you draw on the canvas with two browser windows open you will see how socket.io broadcast works.
+This is a realtime canvas example.  It's really cool, and it works right of the box, so give it a try!
 
-This example is really cool, and it works right of the box, so give it a try!
-
+Open two browser windows on `localhost:7076`, then click and drag to draw in the first browser window, and you can see it draw in the second browser!
 
 #### Server (app.js)
 

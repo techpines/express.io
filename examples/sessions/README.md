@@ -1,9 +1,9 @@
 
 ## Sessions
 
-__This is a copy-paste example.__ [(get the code)](https://github.com/techpines/express.io/tree/master/examples/sessions)
+__This is a copy-paste example.__ 
 
-In __express.io__, sessions are shared between web requests and IO requests.  This makes it a breeze to share a little state or perform     authentication.  You setup your sessions exactly as you would with express, and all the magic is handled for you!
+In __express.io__, sessions are shared between web requests and io requests.  This makes it a breeze to share a little state or perform authentication.  You setup your sessions exactly as you would with express, and all the magic is handled for you!
 
 For this example, go to `localhost:7076`, and you will be prompted by a few questions, and the server will prove the sessions are working.
 
@@ -68,4 +68,4 @@ app.listen(7076)
 </script>
 ```
 
-__Note__: You need to save the session explicitly for IO requests, because there is no guarantee of a response, unlike a normal http request.
+__Note__: You need to save the session explicitly for io requests, because there is no guarantee of a response, unlike a normal http request.

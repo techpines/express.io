@@ -2,7 +2,7 @@
 
 __This is a copy-paste example.__ [(get the code)](https://github.com/techpines/express.io/tree/master/examples/acknowledgements)
 
-Sometimes you need confirmation or acknowledgement from the server for an IO request.  To respond from the server you need to call  `req.io.respond(data)`.
+Sometimes you need confirmation or acknowledgement from the server for an io request.  To respond from the server you need to call  `req.io.respond(data)`.
 
 For this example, go to `localhost:7076` and you should get a pop-up from the acknowledgement.
 

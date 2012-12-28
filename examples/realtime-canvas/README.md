@@ -3,9 +3,9 @@
 
 __This is a copy-paste example.__ 
 
-This is a realtime canvas example.  If you draw on the canvas with two browser windows open you will see how socket.io broadcast works.
+This is a realtime canvas example.  It's really cool, and it works right of the box, so give it a try!
 
-This example is really cool, and it works right of the box, so give it a try!
+Open two browser windows on `localhost:7076`, then click and drag to draw in the first browser window, and you can see it draw in the second browser!
 
 
 #### Server (app.js)
