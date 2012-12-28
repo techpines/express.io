@@ -1,23 +1,37 @@
 
-# FAQ
+## FAQ
 
-## Why did you write this?
+### Why did you write this?
 
-After running through the boiler plate of starting express, http, https, and socket.io servers, I decided that there had to be a simpler way to combine all of these technologies together.  So I set off to write a simple micro-framework to handle basic integration in an elegant, high performance manner.
+After running through the agony of starting express, http, https, and socket.io servers from scratch a few dozen times, I decided that there had to be a better way to combine all of these technologies together in a non-stupid manner.  
 
-## Do all of the examples work?
+So, I set off to write a simple micro-framework to put everything together into one elegant and high performance library.
 
-YES!  I went through and painstakingly tested all of the examples.  I noticed that there are tons of example snippets of express and socket.io, that are missing lines of code, or are just plain wrong. 
+__Express.io__ is also a "response" to all of the other "realtime" frameworks out there that tend to:
 
-Hopefully, this boat load of examples will help.
+* Not be ready for production.
+* Try to deliver everything, including the kitchen sink.
+* Have poorly written examples, that often times don't work.
+* Have serious architectural issues baked right into them.
+* Have small user bases that make them a bad choice to get help with.
+* Have so many decisions made for you, that you feel like you are working with Rails (and yes that's a bad thing, go fuck yourself DHH!)
 
-## Is Express.io ready for production?
+### Do all of the examples work?
 
-YES! Use it in production.  We have been using it in production without issue.  It is built on express and socket.io which are both very solid.
+YES! I went through and painstakingly tested all of the examples.  Almost all of them can be copy-pasted directly from the docs.
 
-## Why coffeescript?
+### Is Express.io a drop-in replacement for express?
 
-If it wasn't for coffeescript, I would not be coding in node.  Period.  All of the examples in the documentation are written in what I call "lazy javascript".  It's javascript that is not the best from a coding perspective, (I don't use `var` etc.).  The point is to be as simple and concise as possible, yet still produce workable code.
+YES!  Just replace express with express.io, and you should have no issues with your current app.
 
-Give your curly brace turd language a rest, and put your big boy pants on. :)
+### Is Express.io ready for production?
 
+YES! We have been using it in production without issue.
+
+### What is a "contrib shout out"?
+
+Basically, if you fork the project, and add your github handle and a short message to the `CONTRIB` file, then I will merge your pull request.
+
+This is so that you can brag to all of your friends that you're a contributor of __express.io__. :)
+
+Some might call this stupid or gimmicky.  Well, put your pithy gripe in a pull request, and it will go up there for everyone to see how clever you are.
