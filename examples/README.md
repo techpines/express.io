@@ -19,9 +19,7 @@ node app.js
 
 ## Simple HTTP + IO Setup
 
-__This is a copy-paste example.__
-
-[Get the code.](https://github.com/techpines/express.io/tree/master/examples/http-io)
+__This is a copy-paste example.__ [Get the code.](https://github.com/techpines/express.io/tree/master/examples/http-io)
 
 This is the canonical express.io example.  It does nothing, except set up 
 an HTTP server and an IO server together.
@@ -41,7 +39,7 @@ app.listen(7076)
 
 ## Simple HTTPS + IO Setup
 
-[Get the code.](https://github.com/techpines/express.io/tree/master/examples/https-io)
+This is a copy-paste example, if key and cert files present. [Get the code.](https://github.com/techpines/express.io/tree/master/examples/https-io)
 
 This is the same as the HTTP example, but for HTTPS.  You have to pass the key and cert contents as an option.
 
@@ -66,9 +64,7 @@ app.listen(7076)
 
 ## Routing
 
-__This is a copy-paste example.__
-
-[Get the code.](https://github.com/techpines/express.io/tree/master/examples/routing)
+__This is a copy-paste example.__ [Get the code.](https://github.com/techpines/express.io/tree/master/examples/routing)
 
 Express.io comes with a simple io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives a [`SocketRequest`](https://github.com/techpines/express.io/tree/master/lib#socketrequest) object.
 
@@ -117,9 +113,7 @@ io.on('talk', function(data) {
 
 ## Route Forwarding
 
-__This is a copy-paste example.__
-
-[Get the code.](https://github.com/techpines/express.io/tree/master/examples/route-forwarding)
+__This is a copy-paste example.__ [Get the code.](https://github.com/techpines/express.io/tree/master/examples/route-forwarding)
 
 The "middleware" style of routing is not a very good fit for io requests.  A typical io request does not need a response, so instead of "middleware", __express.io__ offers a robust system based on __route forwarding__.  Route forwarding can allow for a variety of rich, complex realtime interactions.
 
@@ -159,9 +153,7 @@ Also, depending on the sophistication needed between a socket request and a web 
 
 ## Broadcasting
 
-__This is a copy-paste example__
-
-[Get the code.](https://github.com/techpines/express.io/tree/master/examples/broadcasting)
+__This is a copy-paste example__ [Get the code.](https://github.com/techpines/express.io/tree/master/examples/broadcasting)
 
 You can easily broadcast messages to all your connected io clients.  There are two primary ways to broadcast a message using __express.io__:
 
@@ -207,9 +199,7 @@ io.on('new visitor', function() {
 
 ## Sessions
 
-__This is a copy-paste example.__
-
-[Get the code.](https://github.com/techpines/express.io/tree/master/examples/sessions)
+__This is a copy-paste example.__ [Get the code.](https://github.com/techpines/express.io/tree/master/examples/sessions)
 
 
 In the example, go to `localhost:7076`, and you will be prompted by a few questions, and the server will prove the sessions are working.
@@ -279,9 +269,7 @@ __Note__: You need to save the session explicitly for io requests, because there
 
 ## Acknowledgements
 
-__This is a copy-paste example.__
-
-[Get the code.](https://github.com/techpines/express.io/tree/master/examples/acknowledgements)
+__This is a copy-paste example.__ [Get the code.](https://github.com/techpines/express.io/tree/master/examples/acknowledgements)
 
 Sometimes you need confirmation or acknowledgement from the server for an io request.  To respond from the server you need to call  `req.io.respond(data)`.
 
@@ -319,9 +307,7 @@ In a way, the acknowledgements are a little more old-fashioned, pushing you towa
 
 ## Realtime Canvas
 
-__This is a copy-paste example.__
-
-[Get the code.](https://github.com/techpines/express.io/tree/master/examples/realtime-canvas)
+__This is a copy-paste example.__ [Get the code.](https://github.com/techpines/express.io/tree/master/examples/realtime-canvas)
 
 This is a realtime canvas example.  If you draw on the canvas with two browser windows open you will see how socket.io broadcast works.
 
