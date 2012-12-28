@@ -1,15 +1,15 @@
-
 app = require('express.io')()
 app.http().io()
 
+// Setup the ready route, join room and broadcast to room.
 app.io.route('ready', function(req) {
-    room = req.data
-    req.io.join(room)
-    req.io.room(room).broadcast('announce', {
-        message: 'new client in the ' + room + ' room'
+    req.io.join(req.data)
+    req.io.room(req.data).broadcast('announce', {
+        message: 'New client in the ' + req.data + ' room. '
     })
 })
 
+// Send the client html.
 app.get('/', function(req, res) {
     res.sendfile(__dirname + '/client.html')
 })

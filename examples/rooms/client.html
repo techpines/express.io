@@ -2,12 +2,14 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 io = io.connect()
-
 room = prompt('type a room name')
+
+// Emit ready event with room name.
 io.emit('ready', room)
+
+// Listen for the announce event.
 io.on('announce', function(data) {
-    $('body').append('<p>'+data.message+'</p>')
+    $('body').append('<p>'+data.message+ new Date().toString()+'</p>')
 })
 
-$(function(){$('body').append('<p>Welcome to the '+room+' room</p>')})
 </script>

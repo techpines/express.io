@@ -66,7 +66,7 @@ app.listen(7076)
 
 __This is a copy-paste example.__ [(get the code)](https://github.com/techpines/express.io/tree/master/examples/routing)
 
-Express.io comes with a simple io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives a [`SocketRequest`](https://github.com/techpines/express.io/tree/master/lib#socketrequest) object.
+Express.io comes with a simple io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives a [SocketRequest](https://github.com/techpines/express.io/tree/master/lib#socketrequest) object.
 
 The philosophy behind the routing system is that it should be simple, flexible, and high performance.
 
@@ -79,9 +79,8 @@ When you run this example, go to your browser on `localhost:7076`, and you shoul
 app = require('express.io')()
 app.http().io()
 
-// Setup the ready route.
+// Setup the ready route, and emit talk event.
 app.io.route('ready', function(req) {
-    // Send a talk event to the client.
     req.io.emit('talk', {
         message: 'io event from an io route on the server'
     })
@@ -102,8 +101,10 @@ app.listen(7076)
 <script>
 io = io.connect()
 
-io.emit('ready')
+// Emit ready event.
+io.emit('ready') 
 
+// Listen for the talk event.
 io.on('talk', function(data) {
     alert(data.message)
 })  
@@ -131,7 +132,7 @@ app.http().io()
 // Initial web request.
 app.get('/', function(req, res) {
     // Forward to an io route.
-    req.io.route('hello')  
+    req.io.route('hello')
 })
 
 // Forward io route to another io route.
@@ -139,7 +140,7 @@ app.io.route('hello', function(req) {
     req.io.route('hello-again')
 })
 
-// Sends respone from io route.
+// Sends response from io route.
 app.io.route('hello-again', function(req) {
     req.io.respond({hello: 'from io route'})
 })
@@ -169,10 +170,12 @@ For this example, pop open two browser windows to `localhost:7076`, then click r
 app = require('express.io')()
 app.http().io()
 
+// Broadcast the new visitor event on ready route.
 app.io.route('ready', function(req) {
     req.io.broadcast('new visitor')
 })
 
+// Send client html.
 app.get('/', function(req, res) {
     res.sendfile(__dirname + '/client.html')
 })
@@ -188,11 +191,12 @@ app.listen(7076)
 <script>
 io = io.connect()
 
+// Send the ready event.
 io.emit('ready')
 
-// respond to the new visitor event
+// Listen for the new visitor event.
 io.on('new visitor', function() {
-    $('body').append('<p>New visitor, hooray!</p>')
+    $('body').append('<p>New visitor, hooray! ' + new Date().toString() +'</p>')
 })
 </script>
 ```
@@ -211,18 +215,19 @@ For this example, go to `localhost:7076`, and you will be prompted by a few ques
 express = require('express.io')
 app = express().http().io()
 
-// Setup your sessions.
+// Setup your sessions, just like normal.
 app.use(express.cookieParser())
 app.use(express.session({secret: 'monkey'}))
 
+// Session is automatically setup on initial request.
 app.get('/', function(req, res) {
-    req.session.loginDate = new Date().toString() // add some session data
+    req.session.loginDate = new Date().toString()
     res.sendfile(__dirname + '/client.html')
 })
 
-// Setup a route for the ready event.
+// Setup a route for the ready event, and add session data.
 app.io.route('ready', function(req) {
-    req.session.name = req.data // add name to the session
+    req.session.name = req.data
     req.session.save(function() {
         req.io.emit('get-feelings')
     })
@@ -246,12 +251,15 @@ app.listen(7076)
 <script>
   var socket = io.connect();
 
+  // Emit ready event.
   socket.emit('ready', prompt('What is your name?'))
 
+  // Listen for get-feelings event.
   socket.on('get-feelings', function () {
       socket.emit('send-feelings', prompt('How do you feel?'));
   })
 
+  // Listen for session event.
   socket.on('session', function(data) {
       message = 'Hey ' + data.name + '!\n\n' 
       message += 'Server says you feel '+ data.feelings + '\n'
@@ -264,6 +272,63 @@ app.listen(7076)
 
 __Note__: You need to save the session explicitly for IO requests, because there is no guarantee of a response, unlike a normal http request.
 
+## Rooms
+
+__This is a copy-paste example.__ [(get the code)](https://github.com/techpines/express.io/tree/master/examples/rooms)
+
+Sometimes you will want to group your io clients together into rooms.  With __express.io__ this is a breeze!  Here are the commands for dealing with rooms:
+
+* `req.io.join(room)` - The client for the request joins `room`.
+* `req.io.leave(room)` - The client for the request leaves `room`.
+* `req.io.room(room).broadcast(event, data)` - Broadcast to all client in the room except for the current one.
+* `app.io.room(room).brodcast(event, data)` - Broadcast to all clients in the room.
+
+For this example, open two browser windows on `localhost:7076`.  You will be prompted to give a room name.  Enter the same room name for each browser, then check back with the first window to see the result.  
+
+Also, try a third window with a different room name, and see your other windows miss the broadcast.
+
+#### Server (app.js)
+
+```js
+app = require('express.io')()
+app.http().io()
+
+// Setup the ready route, join room and broadcast to room.
+app.io.route('ready', function(req) {
+    req.io.join(req.data)
+    req.io.room(req.data).broadcast('announce', {
+        message: 'New client in the ' + req.data + ' room. '
+    })
+})
+
+// Send the client html.
+app.get('/', function(req, res) {
+    res.sendfile(__dirname + '/client.html')
+})
+
+app.listen(7076)
+```
+
+#### Client (client.html)
+
+```html
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+io = io.connect()
+room = prompt('type a room name')
+
+// Emit ready event with room name.
+io.emit('ready', room)
+
+// Listen for the announce event.
+io.on('announce', function(data) {
+    $('body').append('<p>'+data.message+ new Date().toString()+'</p>')
+})
+
+</script>
+```
+
 ## Acknowledgements
 
 __This is a copy-paste example.__ [(get the code)](https://github.com/techpines/express.io/tree/master/examples/acknowledgements)
@@ -275,11 +340,18 @@ For this example, go to `localhost:7076` and you should get a pop-up from the ac
 #### Server (app.js)
 
 ```js
-app = require('express.io')
+app = require('express.io')()
 app.http().io()
 
+// Setup the ready route.
 app.io.route('ready', function(req) {
-    req.io.respond({success: 'here is your acknowledment for the ready event'})
+    req.io.respond({
+        success: 'here is your acknowledegment for the ready event'
+    })
+})
+
+app.get('/', function(req, res) {
+    res.sendfile(__dirname + '/client.html')
 })
 
 app.listen(7076)
@@ -292,6 +364,7 @@ app.listen(7076)
 <script>
 io = io.connect()
 
+// Emit ready event, and wait for acknowledgement.
 io.emit('ready', {hey: 'server'}, function(data) {
     alert(data.success)
 })
@@ -317,14 +390,12 @@ This example is really cool, and it works right of the box, so give it a try!
 express = require('express.io')
 app = express().http().io()
 
-// Static serve for drag and drop library.
-app.use(express.static(__dirname))
-
 // Broadcast all draw clicks.
 app.io.route('drawClick', function(req) {
-    req.socket.broadcast.emit('draw', req.body)
+    req.io.broadcast('draw', req.data)
 })
 
+// Send client html.
 app.get('/', function(req, res) {
     res.sendfile(__dirname + '/client.html')
 })
@@ -335,8 +406,8 @@ app.listen(7076)
 #### Client (client.html)
 
 ```html
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript" src="/lib/jquery.event.drag-2.0.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="//cdn.techpines.io/jquery.event.drag-2.0.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
     App = {}
@@ -356,7 +427,8 @@ app.listen(7076)
         }
     }
 
-    App.socket.on('draw', App.draw) // draw from other sockets
+    // Draw from other sockets
+    App.socket.on('draw', App.draw) 
 
     // Bind click and drag events to drawing and sockets.
     $(function() {
@@ -368,8 +440,8 @@ app.listen(7076)
                 y: (e.clientY - offset.top),
                 type: e.handleObj.type
             }
-            App.draw(data) // draw yourself
-            App.socket.emit('drawClick', data) // broadcast draw
+            App.draw(data) // Draw yourself.
+            App.socket.emit('drawClick', data) // Broadcast draw.
         })
     })         
 </script>
@@ -399,26 +471,31 @@ express = require('express.io')
 redis = require('redis')
 RedisStore = express.io.RedisStore
 
-cluster = require('cluster')
-numCPUs = require('os').cpus().length;
-
 // This is what the workers will do.
 workers = function() {
     app = express().http().io()
 
+    // Setup the redis store for scalable io.
     app.io.set('store', new express.io.RedisStore({
         redisPub: redis.createClient(),
         redisSub: redis.createClient(),
         redisClient: redis.createClient()
     }))
 
+    // build realtime-web app
+
     app.listen(7076)
 }
 
+// Start forking if you are the master.
+cluster = require('cluster')
+numCPUs = require('os').cpus().length;
 
-// Start forking if you are the master
 if (cluster.isMaster) {
-    for (var i = 0; i < numCPUs; i++) { cluster.fork() } 
+    for (var i = 0; i < numCPUs; i++) { cluster.fork() }
 } else { workers() }
 ```
 
+## Scaling with Mongo
+
+*Coming soon!*

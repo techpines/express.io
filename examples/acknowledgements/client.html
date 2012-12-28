@@ -2,7 +2,8 @@
 <script>
 io = io.connect()
 
-io.emit('ready', {message: 'hey server'}, function(data) {
-    alert(data.message)
+// Emit ready event, and wait for acknowledgement.
+io.emit('ready', {hey: 'server'}, function(data) {
+    alert(data.success)
 })
 </script>
