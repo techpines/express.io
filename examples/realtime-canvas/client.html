@@ -19,7 +19,8 @@
         }
     }
 
-    App.socket.on('draw', App.draw) // draw from other sockets
+    // Draw from other sockets
+    App.socket.on('draw', App.draw) 
 
     // Bind click and drag events to drawing and sockets.
     $(function() {
@@ -31,8 +32,8 @@
                 y: (e.clientY - offset.top),
                 type: e.handleObj.type
             }
-            App.draw(data) // draw yourself
-            App.socket.emit('drawClick', data) // broadcast draw
+            App.draw(data) // Draw yourself.
+            App.socket.emit('drawClick', data) // Broadcast draw.
         })
     })         
 </script>

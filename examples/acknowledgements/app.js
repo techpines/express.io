@@ -2,9 +2,11 @@
 app = require('express.io')()
 app.http().io()
 
-app.io.route('chat', function(req) {
-    console.log('Client says ' + req.data.message)
-    req.io.respond({message: 'thanks for chatting over io'})
+// Setup the ready route.
+app.io.route('ready', function(req) {
+    req.io.respond({
+        success: 'here is your acknowledegment for the ready event'
+    })
 })
 
 app.get('/', function(req, res) {

@@ -1,4 +1,3 @@
-
 fs = require('fs')
 options = {
     key: fs.readFileSync('./key'), 

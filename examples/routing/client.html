@@ -1,10 +1,11 @@
-
 <script src="/socket.io/socket.io.js"></script>
 <script>
 io = io.connect()
 
-io.emit('ready')
+// Emit ready event.
+io.emit('ready') 
 
+// Listen for the talk event.
 io.on('talk', function(data) {
     alert(data.message)
 })  

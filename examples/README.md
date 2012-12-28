@@ -1,7 +1,7 @@
 
 # Examples
 
-__All of these examples work__.  I repeat, __all of these examples work__.  Almost every example will work if copy and pasted.  These are __real working examples__.  Just make sure you have `node` and `express.io` installed.
+__All of these examples work__.  I repeat, __all of these examples work__.  Almost every example will work if copy and pasted.  These are working examples.  Just make sure you have `node` and `express.io` installed. :)
 
 You can also run them straight out of the repository without copy-pasting, if you do the following.
 
@@ -21,8 +21,8 @@ node app.js
 
 __This is a copy-paste example.__ [(get the code)](https://github.com/techpines/express.io/tree/master/examples/http-io)
 
-This is the canonical express.io example.  It does nothing, except set up 
-an HTTP server and an IO server together.
+This is the canonical __express.io__ example.  It does nothing, except set up 
+an HTTP server and an IO server together on the same port.
 
 When you run this example, the server should start.
 

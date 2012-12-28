@@ -1,5 +1,4 @@
-
-app = require('../../../express.io')()
+app = require('express.io')()
 app.http().io()
 
 // Initial web request.
@@ -13,10 +12,9 @@ app.io.route('hello', function(req) {
     req.io.route('hello-again')
 })
 
-// Sends respone from io route.
+// Sends response from io route.
 app.io.route('hello-again', function(req) {
     req.io.respond({hello: 'from io route'})
 })
 
 app.listen(7076)
-

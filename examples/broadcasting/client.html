@@ -3,9 +3,10 @@
 <script>
 io = io.connect()
 
+// Send the ready event.
 io.emit('ready')
 
-// respond to the new visitor event
+// Listen for the new visitor event.
 io.on('new visitor', function() {
     $('body').append('<p>New visitor, hooray! ' + new Date().toString() +'</p>')
 })

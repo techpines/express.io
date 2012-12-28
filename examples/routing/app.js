@@ -1,11 +1,9 @@
-
 app = require('express.io')()
 app.http().io()
 
-// Setup the ready route.
+// Setup the ready route, and emit talk event.
 app.io.route('ready', function(req) {
-    // Send a talk event to the client.
-    req.io.emit('talk', {
+    req.io.emit('talk', { 
         message: 'io event from an io route on the server'
     })
 })
