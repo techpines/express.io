@@ -39,7 +39,7 @@ with this line of code
 require('express.io')
 ```
 
-Your app should run just the same as before.  Express.io is a superset of express and socket.io!
+Your app should run just the same as before!  Express.io is designed to be a superset of Express and Socket.io.  An easy to use drop-in replacement that makes it simple to get started with the realtime-web.
 
 
 ## Examples
@@ -51,14 +51,16 @@ __All of these examples work.__  I repeat, __they all work__.  Express.io is a v
 
 Or view them bite size:
 
-* [Simple HTTP + IO Setup](https://github.com/techpines/express.io/tree/master/examples/http-io)
-* [Simple HTTPS + IO Setup](https://github.com/techpines/express.io/tree/master/examples/https-io)
-* [Routing](https://github.com/techpines/express.io/tree/master/examples/routing)
-* [Rooms](https://github.com/techpines/express.io/tree/master/examples/rooms)
-* [Broadcasting](https://github.com/techpines/express.io/tree/master/examples/broadcasting)
-* [Acknowledgements](https://github.com/techpines/express.io/tree/master/examples/acknowledgements)
-* [Realtime Canvas](https://github.com/techpines/express.io/tree/master/examples/realtime-canvas)
-* [Scaling with Redis](https://github.com/techpines/express.io/tree/master/examples/scaling-with-redis)
+* [Simple HTTP + IO Setup](https://github.com/techpines/express.io/tree/master/examples#simple-http--io-setup)
+* [Simple HTTPS + IO Setup](https://github.com/techpines/express.io/tree/master/examples#simple-https--io-setup)
+* [Routing](https://github.com/techpines/express.io/tree/master/examples#routing)
+* [Route Forwarding](https://github.com/techpines/express.io/tree/master/examples#route-forwarding)
+* [Broadcasting](https://github.com/techpines/express.io/tree/master/examples#broadcasting)
+* [Rooms](https://github.com/techpines/express.io/tree/master/examples#rooms)
+* [Sessions](https://github.com/techpines/express.io/tree/master/examples#sessions)
+* [Acknowledgements](https://github.com/techpines/express.io/tree/master/examples#acknowledgements)
+* [Realtime Canvas](https://github.com/techpines/express.io/tree/master/examples#realtime-canvas)
+* [Scaling with Redis](https://github.com/techpines/express.io/tree/master/examples#scaling-with-redis)
 
 To run the examples from git, do the following:
 
