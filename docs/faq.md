@@ -11,11 +11,11 @@ So, I set off to write a simple micro-framework to put everything together into 
 
 YES! I went through and painstakingly tested all of the examples.  Almost all of them can be copy-pasted directly from the docs.
 
-### Is Express.io a drop-in replacement for express?
+### Is express.io a drop-in replacement for express?
 
 Yes, just replace express with express.io, and you should have no issues with your current app.
 
-### Is Express.io ready for production?
+### Is express.io ready for production?
 
 Yes, we have been using it in production without issue.
 
