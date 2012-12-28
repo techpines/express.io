@@ -1,9 +1,17 @@
 
-
 ## Simple HTTP + IO Setup
 
-This is the canonical express.io example.  It does nothing, except set up 
-an HTTP server and an IO server together.
+### To Run
+
+```
+cd examples/http-io
+node app.js
+```
+
+This is the canonical __express.io__ example.  It does nothing, except set up
+an HTTP server and an IO server together on the same port.
+
+When you run this example, the server should start.
 
 #### Server (app.js)
 
@@ -16,9 +24,3 @@ app.http().io()
 app.listen(7076)
 ```
 
-### How to Run
-
-```
-cd examples/http-io
-node app.js
-```
