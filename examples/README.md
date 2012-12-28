@@ -24,6 +24,10 @@ node app.js
 This is the canonical express.io example.  It does nothing, except set up 
 an HTTP server and an IO server together.
 
+When you run this example, the server should start.  Nothing else very interesting should happen.
+
+__This is a copy-paste example.__
+
 #### Server (app.js)
 
 ```js
@@ -40,6 +44,10 @@ app.listen(7076)
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/https-io)
 
 This is the same as the HTTP example, but for HTTPS.  You have to pass the key and cert contents as an option.
+
+When you run this example, the server should start.  Nothing else very interesting should happen.
+
+__This is NOT a copy-paste example.__
 
 #### Server (app.js)
 
@@ -62,7 +70,13 @@ app.listen(7076)
 
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/routing)
 
-Express.io comes with a simple io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives an io request object.
+Express.io comes with a simple io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives a [`SocketRequest`](https://github.com/techpines/express.io/tree/master/lib#socketrequest) object.
+
+The philosophy behind the routing system is that it should be simple, flexible, and high performance.
+
+When you run this example, go to your browser on `localhost:7076`, and you should see an alert message pop up, that is triggered by the io route.
+
+__This is a copy-paste example.__
 
 #### Server (app.js)
 
@@ -70,13 +84,16 @@ Express.io comes with a simple io routing system.  Use `app.io.route` by providi
 app = require('express.io')()
 app.http().io()
 
-// Setup the hello route.
-app.io.route('hello', function(req) {
-    console.log('Socket says ' + req.data.hello)
+// Setup the ready route.
+app.io.route('ready', function(req) {
+    // Send a talk event to the client.
+    req.io.emit('talk', {
+        message: 'io event from an io route on the server'
+    })
 })
 
 // Send the client html.
-app.get('/', function(req, res) { 
+app.get('/', function(req, res) {
     res.sendfile(__dirname + '/client.html')
 })
 
@@ -88,9 +105,13 @@ app.listen(7076)
 ```html
 <script src="/socket.io/socket.io.js"></script>
 <script>
-socket = io.connect()
+io = io.connect()
 
-socket.emit('hello', {hello: 'client is happy'})
+io.emit('ready')
+
+io.on('talk', function(data) {
+    alert(data.message)
+})  
 
 </script>
 ```
@@ -99,11 +120,13 @@ socket.emit('hello', {hello: 'client is happy'})
 
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/route-forwarding)
 
-You can also forward routes from on io request to another, and even from a web request to another.
+The middleware style of routing is not a very good fit for io requests.  A typical io request does not need a response, so instead of middleware, __express.io__ offers robust *route forwarding*.  Route forwarding can allow for a variety of rich realtime applications.
 
 You just use `req.io.route(route)` to forward the current request.
 
-In the following example, a route is a passed from an initial web request through to io routes, until finally back to the user.
+In this example, a route is a passed from an initial web request through two io routes, until finally back to the user.  If you go to `localhost:7076` you should see a simple json request returned.
+
+__This is a copy-paste example.__
 
 #### Server (app.js)
 
@@ -132,13 +155,65 @@ app.listen(7076)
 
 __Note__: When you forward http requests to io routes, `req.io.respond(data)` will call `res.json(data)` on the actual http request.  This makes sense because http routes require a response, and the `respond` method is supposed to be a response for the given request.
 
+Also, depending on the sophistication needed between a socket request and a web request, you might consider writing your own custom middleware layer and overriding `req.io.route` for your web requests.
+
+## Broadcasting
+
+[Get the code.](https://github.com/techpines/express.io/tree/master/examples/broadcasting)
+
+You can easily broadcast messages to all your connected io clients.  There are two primary ways to broadcast a message using __express.io__:
+
+* `app.io.broadcast(event, data)` - Will send the `event` and `data` to all connected clients.
+* `req.io.broadcast(event, data)` - Will send the `event` and `data` to all connected clients except the client associated with the request.
+
+For this example, pop open two browser windows to `localhost:7076`, then click refresh about five or six times on the second window, while watching what happens in the first window.
+
+__This is a copy-paste example__
+
+#### Server (app.js)
+
+```js
+app = require('express.io')()
+app.http().io()
+
+app.io.route('ready', function(req) {
+    req.io.broadcast('new visitor')
+})
+
+app.get('/', function(req, res) {
+    res.sendfile(__dirname + '/client.html')
+})
+
+app.listen(7076)
+```
+
+#### Client (client.html)
+
+```html
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+io = io.connect()
+
+io.emit('ready')
+
+// respond to the new visitor event
+io.on('new visitor', function() {
+    $('body').append('<p>New visitor, hooray!</p>')
+})
+</script>
+```
+
 ## Sessions
 
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/sessions)
 
-Sessions are setup as you would normally do with express!  Nothing different.  When you start making io requests, you will have access to the express session.  Use it to store user data, or for authentication, whatever.
 
-__Note__: You need to save the session explicitly for io requests, because there is no guarantee of a response, unlike a normal http request.
+In the example, go to `localhost:7076`, and you will be prompted by a few questions, and the server will prove the sessions are working.
+
+__This is a copy-paste example.__
+
+#### Server (app.js)
 
 ```js
 express = require('express.io')
@@ -148,38 +223,71 @@ app = express().http().io()
 app.use(express.cookieParser())
 app.use(express.session({secret: 'monkey'}))
 
-// Setup a route to get the sockets 'hey' event.
-app.io.route('hey', function(req) {
-    req.session.name = req.data
-    req.session.save(function() {
-        req.socket.emit('how are you?')
-    })
-})
-
-// Make sure to 'chat' with the socket, it might be lonely.
-app.io.route('chat', function(req) {
-    req.session.feelings = req.data
-    req.session.save(function() {
-        req.socket.emit('cool', req.session)
-    })
-})
-
 // Send back the client html.
 app.get('/', function(req, res) {
+    // Add login date to the session.
     req.session.loginDate = new Date().toString()
     res.sendfile(__dirname + '/client.html')
+})
+
+// Setup a route for the ready event.
+app.io.route('ready', function(req) {
+    req.session.name = req.data // add name to the session
+
+    // save the session
+    req.session.save(function() {
+        req.io.emit('get-feelings')
+    })
+})
+
+// Send back the session data.
+app.io.route('send-feelings', function(req) {
+    req.session.feelings = req.data
+    req.session.save(function() {
+        req.io.emit('session', req.session)
+    })
 })
 
 app.listen(7076)
 ```
 
-## Broadcasting
+#### Client (client.html)
 
-[Get the code.](https://github.com/techpines/express.io/tree/master/examples/broadcasting)
+```html
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect();
+
+  socket.emit('ready', prompt('What is your name?'))
+
+  socket.on('get-feelings', function () {
+      socket.emit('send-feelings', prompt('How do you feel?'));
+  })
+
+  socket.on('session', function(data) {
+      message = 'Hey ' + data.name + '!\n\n' 
+      message += 'Server says you feel '+ data.feelings + '\n'
+      message += 'I know these things because sessions work!\n\n'
+      message += 'Also, you joined ' + data.loginDate + '\n'
+      alert(message)
+  })
+</script>
+```
+
+#### Client (client.html)
+
+__Note__: You need to save the session explicitly for io requests, because there is no guarantee of a response, unlike a normal http request.
 
 ## Acknowledgements
 
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/acknowledgements)
+
+Sometimes you need confirmation or acknowledgement from the server for an io request.  To respond from the server you need to call  `req.io.respond(data)`.
+
+
+In this example, go to `localhost:7076` and you should get a pop-up from the acknowledgement. 
+
+__This is a copy-paste example.__
 
 #### Server (app.js)
 
@@ -187,9 +295,8 @@ app.listen(7076)
 app = require('express.io')
 app.http().io()
 
-app.io.route('chat', function(req) {
-    console.log(req.data)
-    req.io.respond({thanks: 'for chatting'})
+app.io.route('ready', function(req) {
+    req.io.respond({success: 'here is your acknowledment for the ready event'})
 })
 
 app.listen(7076)
@@ -202,11 +309,16 @@ app.listen(7076)
 <script>
 io = io.connect()
 
-io.emit('chat', {hey: 'server'}, function(data) {
-    alert(data)
+io.emit('ready', {hey: 'server'}, function(data) {
+    alert(data.success)
 })
 </script>
 ```
+
+This might lead some people to wonder, when is it best to send an acknowledgement vs just emitting an event to the client.  It actually doesn't matter, it's more of a code clarity thing.  Events are more flexible, because they can be triggered in a number of different ways, whereas the acknowledgement is a straight response.
+
+In a way, the acknowledgements are a little more old-fashioned, pushing you towards the "every request has a response" mentality of traditional http.  Sometimes this is good, other times it's not.  Use common sense and just be consistent with whatever approach you take, and you should be fine.
+
 ## Realtime Canvas
 
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/realtime-canvas)
@@ -215,6 +327,7 @@ This is a realtime canvas example.  If you draw on the canvas with two browser w
 
 This example is really cool, and it works right of the box, so give it a try!
 
+__This is a copy-paste example.__
 
 #### Server (app.js)
 
@@ -281,13 +394,23 @@ app.listen(7076)
 <canvas width="800px" height="400px" style="margin: 0 auto"></canvas>
 ```
 
-## Scaling your Socket.io for Multi-Process with Redis
+## Scaling with Redis
 
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/scaling-with-redis)
 
-If you need to scale your socket.io server past one process, (which hopefully you will).  Then you need to take advantage of a pub/sub server.  Here is an example using Redis with multiple processes.
+If you need to scale your io server past one process, (which hopefully you will).  Then you need to take advantage of a pub/sub server.  Here is an example using Redis with multiple processes.
 
-You need to install redis on you machine for this to run, but it's pretty simple and well worth it.
+To start with redis, you need to install it, here are the [install docs](http://redis.io/topics/quickstart).
+
+Once you have redis installed you need to install the redis node client.
+
+```
+npm install redis
+```
+
+When you run this example, if you have more than one processor, then you should see a log message from the io server for each process.
+
+__This is a copy-paste example if redis dependencies are installed.__
 
 #### Server (app.js)
 

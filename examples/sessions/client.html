@@ -3,13 +3,13 @@
 <script>
   var socket = io.connect();
 
-  socket.emit('hey', prompt('What is your name?'))
+  socket.emit('ready', prompt('What is your name?'))
 
-  socket.on('how are you?', function () {
-      socket.emit('chat', prompt('How do you feel?'));
+  socket.on('get-feelings', function () {
+      socket.emit('send-feelings', prompt('How do you feel?'));
   })
 
-  socket.on('cool', function(data) {
+  socket.on('session', function(data) {
       message = 'Hey ' + data.name + '!\n\n' 
       message += 'Server says you feel '+ data.feelings + '\n'
       message += 'I know these things because sessions work!\n\n'

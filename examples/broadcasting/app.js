@@ -1,9 +1,12 @@
 
-app = require('../../../express.io')()
+app = require('express.io')()
 app.http().io()
 
+app.io.route('ready', function(req) {
+    req.io.broadcast('new visitor')
+})
+
 app.get('/', function(req, res) {
-    app.io.broadcast('new visitor')
     res.sendfile(__dirname + '/client.html')
 })
 

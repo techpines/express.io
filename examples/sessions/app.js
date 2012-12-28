@@ -6,26 +6,29 @@ app = express().http().io()
 app.use(express.cookieParser())
 app.use(express.session({secret: 'monkey'}))
 
-// Setup a route to get the sockets 'hey' event.
-app.io.route('hey', function(req) {
-    req.session.name = req.data
-    req.session.save(function() {
-        req.socket.emit('how are you?')
-    })
-})
-
-// Make sure to 'chat' with the socket, it might be lonely.
-app.io.route('chat', function(req) {
-    req.session.feelings = req.data
-    req.session.save(function() {
-        req.socket.emit('cool', req.session)
-    })
-})
-
 // Send back the client html.
 app.get('/', function(req, res) {
+    // Add login date to the session.
     req.session.loginDate = new Date().toString()
     res.sendfile(__dirname + '/client.html')
+})
+
+// Setup a route for the ready event.
+app.io.route('ready', function(req) {
+    req.session.name = req.data // add name to the session
+    
+    // save the session
+    req.session.save(function() {
+        req.io.emit('get-feelings')
+    })
+})
+
+// Send back the session data.
+app.io.route('send-feelings', function(req) {
+    req.session.feelings = req.data
+    req.session.save(function() {
+        req.io.emit('session', req.session)
+    })
 })
 
 app.listen(7076)

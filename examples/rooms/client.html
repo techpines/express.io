@@ -1,11 +1,13 @@
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
 io = io.connect()
 
-io.emit('ready')
-io.on('hey', function(data) {
-    console.log(data)
+room = prompt('type a room name')
+io.emit('ready', room)
+io.on('announce', function(data) {
+    $('body').append('<p>'+data.message+'</p>')
 })
 
+$(function(){$('body').append('<p>Welcome to the '+room+' room</p>')})
 </script>
