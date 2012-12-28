@@ -1,9 +1,9 @@
 
 # Examples
 
-__All of these examples work__ on node 0.8.x and 0.6.x, although less testing has been done. Please run through the examples.  They will help. 
+__All of these examples work__.  I repeat, __all of these examples work__.  Almost every example will work if copy and pasted.  These are __real working examples__.  Just make sure you have `node` and `express.io` installed.
 
-To get started run the following commands:
+You can also run them straight out of the repository without copy-pasting, if you do the following.
 
 ```bash
 git clone git://github.com/techpines/express.io
@@ -19,14 +19,14 @@ node app.js
 
 ## Simple HTTP + IO Setup
 
+__This is a copy-paste example.__
+
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/http-io)
 
 This is the canonical express.io example.  It does nothing, except set up 
 an HTTP server and an IO server together.
 
-When you run this example, the server should start.  Nothing else very interesting should happen.
-
-__This is a copy-paste example.__
+When you run this example, the server should start.
 
 #### Server (app.js)
 
@@ -45,9 +45,7 @@ app.listen(7076)
 
 This is the same as the HTTP example, but for HTTPS.  You have to pass the key and cert contents as an option.
 
-When you run this example, the server should start.  Nothing else very interesting should happen.
-
-__This is NOT a copy-paste example.__
+When you run this example, the server should start. 
 
 #### Server (app.js)
 
@@ -68,6 +66,8 @@ app.listen(7076)
 
 ## Routing
 
+__This is a copy-paste example.__
+
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/routing)
 
 Express.io comes with a simple io routing system.  Use `app.io.route` by providing a `route` and a `callback`.  The `callback` receives a [`SocketRequest`](https://github.com/techpines/express.io/tree/master/lib#socketrequest) object.
@@ -76,7 +76,6 @@ The philosophy behind the routing system is that it should be simple, flexible, 
 
 When you run this example, go to your browser on `localhost:7076`, and you should see an alert message pop up, that is triggered by the io route.
 
-__This is a copy-paste example.__
 
 #### Server (app.js)
 
@@ -118,15 +117,16 @@ io.on('talk', function(data) {
 
 ## Route Forwarding
 
+__This is a copy-paste example.__
+
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/route-forwarding)
 
-The middleware style of routing is not a very good fit for io requests.  A typical io request does not need a response, so instead of middleware, __express.io__ offers robust *route forwarding*.  Route forwarding can allow for a variety of rich realtime applications.
+The "middleware" style of routing is not a very good fit for io requests.  A typical io request does not need a response, so instead of "middleware", __express.io__ offers a robust system based on __route forwarding__.  Route forwarding can allow for a variety of rich, complex realtime interactions.
 
-You just use `req.io.route(route)` to forward the current request.
+To forward a request, you use `req.io.route(route)`.
 
 In this example, a route is a passed from an initial web request through two io routes, until finally back to the user.  If you go to `localhost:7076` you should see a simple json request returned.
 
-__This is a copy-paste example.__
 
 #### Server (app.js)
 
@@ -159,6 +159,8 @@ Also, depending on the sophistication needed between a socket request and a web 
 
 ## Broadcasting
 
+__This is a copy-paste example__
+
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/broadcasting)
 
 You can easily broadcast messages to all your connected io clients.  There are two primary ways to broadcast a message using __express.io__:
@@ -168,7 +170,6 @@ You can easily broadcast messages to all your connected io clients.  There are t
 
 For this example, pop open two browser windows to `localhost:7076`, then click refresh about five or six times on the second window, while watching what happens in the first window.
 
-__This is a copy-paste example__
 
 #### Server (app.js)
 
@@ -206,12 +207,12 @@ io.on('new visitor', function() {
 
 ## Sessions
 
+__This is a copy-paste example.__
+
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/sessions)
 
 
 In the example, go to `localhost:7076`, and you will be prompted by a few questions, and the server will prove the sessions are working.
-
-__This is a copy-paste example.__
 
 #### Server (app.js)
 
@@ -274,20 +275,17 @@ app.listen(7076)
 </script>
 ```
 
-#### Client (client.html)
-
 __Note__: You need to save the session explicitly for io requests, because there is no guarantee of a response, unlike a normal http request.
 
 ## Acknowledgements
+
+__This is a copy-paste example.__
 
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/acknowledgements)
 
 Sometimes you need confirmation or acknowledgement from the server for an io request.  To respond from the server you need to call  `req.io.respond(data)`.
 
-
-In this example, go to `localhost:7076` and you should get a pop-up from the acknowledgement. 
-
-__This is a copy-paste example.__
+For this example, go to `localhost:7076` and you should get a pop-up from the acknowledgement. 
 
 #### Server (app.js)
 
@@ -321,13 +319,14 @@ In a way, the acknowledgements are a little more old-fashioned, pushing you towa
 
 ## Realtime Canvas
 
+__This is a copy-paste example.__
+
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/realtime-canvas)
 
 This is a realtime canvas example.  If you draw on the canvas with two browser windows open you will see how socket.io broadcast works.
 
 This example is really cool, and it works right of the box, so give it a try!
 
-__This is a copy-paste example.__
 
 #### Server (app.js)
 
@@ -396,11 +395,13 @@ app.listen(7076)
 
 ## Scaling with Redis
 
+__This is a copy-paste example, if redis dependencies installed.__
+
 [Get the code.](https://github.com/techpines/express.io/tree/master/examples/scaling-with-redis)
 
-If you need to scale your io server past one process, (which hopefully you will).  Then you need to take advantage of a pub/sub server.  Here is an example using Redis with multiple processes.
+If you need to scale your io server past one process, (which hopefully you will).  Then you need to take advantage of a pub/sub server.  Here is an example using Redis with multiple node processes.
 
-To start with redis, you need to install it, here are the [install docs](http://redis.io/topics/quickstart).
+To start, you might need to install redis, here are the [install docs](http://redis.io/topics/quickstart).
 
 Once you have redis installed you need to install the redis node client.
 
@@ -409,8 +410,6 @@ npm install redis
 ```
 
 When you run this example, if you have more than one processor, then you should see a log message from the io server for each process.
-
-__This is a copy-paste example if redis dependencies are installed.__
 
 #### Server (app.js)
 
