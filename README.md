@@ -94,7 +94,7 @@ Here are all the wonderful __express.io__ objects!
 
 Have frequent questions, we have frequent answers.
 
-Check out the [faq](https://github.com/techpines/express.io/tree/master/docs/faq.md).
+[Check here](https://github.com/techpines/express.io/tree/master/docs/faq.md).
 
 ## Contrib Shout Out
 
