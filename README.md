@@ -96,17 +96,6 @@ Have frequent questions, we have frequent answers.
 
 [Check here](https://github.com/techpines/express.io/tree/master/docs/faq.md).
 
-## Contrib Shout Out
-
-[Fork](https://github.com/techpines/express.io/fork_select) this bad boy, edit the `CONTRIB` file with your github handle and a short message, then make a pull request.
-
-
-### CONTRIB
-```twitter
-@techpines - woot!
-+ @saladfingers - I like express.io bro
-```
-
 ## License
 It's free! Party with the MIT!
 
