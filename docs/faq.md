@@ -9,13 +9,15 @@ So, I set off to write a simple micro-framework to put everything together into 
 
 ### Do all of the examples work?
 
-YES! I went through and painstakingly tested all of the examples.  Almost all of them can be copy-pasted directly from the docs.
+Yes, I went through and painstakingly tested all of the examples.  Almost all of them can be copy-pasted directly from the docs.
 
-### Is express.io a drop-in replacement for express?
+I take the examples in this project very seriously.  If you run into any problems, then please file an issue.
 
-Yes, just replace express with express.io, and you should have no issues with your current app.
+### Is this a drop-in replacement for express?
 
-### Is express.io ready for production?
+Yes, just replace express with __express.io__, and you should have no issues with your current app.
+
+### Is it ready for production?
 
 Yes, we have been using it in production without issue.
 

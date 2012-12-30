@@ -1,7 +1,9 @@
 {
     "name": "express.io",
-    "version": "1.0.7",
-    "description": "realtime-web app framework",
+    "version": "1.1.2",
+    "description": "realtime-web app framework, express.io = express + socket.io",
+    "keywords": ["realtime", "web", "framework", "express.io", "express", "socket.io", "badass"],
+    "homepage": "http://express-io.org",
     "author": "Brad Carleton <brad@techpines.com>",
     "repository": "git://github.com/techpines/express.io",
     "dependencies": {
