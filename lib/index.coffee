@@ -3,6 +3,7 @@ express = require 'express'
 io = require 'socket.io'
 http = require 'http'
 https = require 'https'
+async = require 'async'
 
 express.io = io
 
@@ -30,11 +31,18 @@ express.application.https = (options) ->
 express.application.io = (options) ->
     @io = io.listen @server, options
     @io.router = new Object
+    @io.middleware = []
     @io.route = (route, next, options) ->
         return @router[route] next if options?.trigger is true
         @router[route] = next
+
     @io.configure => @io.set 'authorization', (data, next) =>
-        return next null, true unless sessionConfig.store?
+        unless sessionConfig.store?
+            return async.forEachSeries @io.middleware, (callback, next) ->
+                callback(data, next)
+            , (error) ->
+                return next error if error?
+                next null, true
         cookieParser = express.cookieParser()
         cookieParser data, null, (error) ->
             return next error if error?
@@ -46,6 +54,9 @@ express.application.io = (options) ->
                 data.session = new connect.session.Session data, session
                 data.sessionStore = sessionConfig.store
                 next null, true
+
+    @io.use = (callback) =>
+        @io.middleware.push callback
 
     @io.sockets.on 'connection', (socket) =>
         initRoutes socket, @io
