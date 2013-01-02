@@ -1,4 +1,3 @@
-
 connect = require 'connect'
 express = require 'express'
 io = require 'socket.io'
@@ -29,7 +28,7 @@ express.application.https = (options) ->
     return this
 
 express.application.io = (options) ->
-    @io = io.listen @server
+    @io = io.listen @server, options
     @io.router = new Object
     @io.route = (route, next, options) ->
         return @router[route] next if options?.trigger is true
