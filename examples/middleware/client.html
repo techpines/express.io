@@ -1,13 +1,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
-try {
-    io = io.connect()
-    console.log(io)
-    io.on('error', function(stuff) {
-        console.log(stuff)
-        alert(stuff)
-    })
-} catch(error) {
+io = io.connect()
+io.on('error', function(error) {
     alert(error)
-}
+})
 </script>
