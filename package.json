@@ -1,6 +1,6 @@
 {
     "name": "express.io",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "description": "realtime-web app framework for nodejs",
     "keywords": ["realtime", "web", "framework", "express.io", "express", "socket.io", "badass"],
     "homepage": "http://express-io.org",
@@ -10,7 +10,8 @@
         "coffee-script": "1.4.0",
         "express": "3.0.4",
         "socket.io": "0.9.13",
-        "connect": "2.7.1"
+        "connect": "2.7.1",
+        "underscore": "1.4.3"
     },
     "main": "switch.js"
 }

@@ -3,6 +3,7 @@ express = require 'express'
 io = require 'socket.io'
 http = require 'http'
 https = require 'https'
+_ = require 'underscore'
 
 express.io = io
 
@@ -32,7 +33,11 @@ express.application.io = (options) ->
     @io.router = new Object
     @io.route = (route, next, options) ->
         return @router[route] next if options?.trigger is true
-        @router[route] = next
+        if _.isFunction next
+            @router[route] = next
+        else
+            for key, value of next
+                @router["#{route}:#{key}"] = value
     @io.configure => @io.set 'authorization', (data, next) =>
         return next null, true unless sessionConfig.store?
         cookieParser = express.cookieParser()
