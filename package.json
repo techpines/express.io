@@ -10,8 +10,8 @@
         "express": "3.0.4",
         "socket.io": "0.9.13",
         "connect": "2.7.1",
-        "underscore": "1.4.3"
-        "coffee-script": "1.4.0",
+        "underscore": "1.4.3",
+        "coffee-script": "1.4.0"
     },
     "main": "switch.js"
 }
