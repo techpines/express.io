@@ -32,7 +32,12 @@ express.application.io = (options) ->
     @io = io.listen @server, options
     @io.router = new Object
     @io.route = (route, next, options) ->
-        return @router[route] next if options?.trigger is true
+        if options?.trigger is true
+            if route.indexOf ':' is -1
+                @router[route] next
+            else
+                split = route.split ':'
+                @router[split[0]][split[1]] next
         if _.isFunction next
             @router[route] = next
         else
