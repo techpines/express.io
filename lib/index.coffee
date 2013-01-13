@@ -4,8 +4,10 @@ io = require 'socket.io'
 http = require 'http'
 https = require 'https'
 async = require 'async'
+middleware = require './middleware'
 
 express.io = io
+express.io.routeForward = middlware.routeForward
 
 session = express.session
 delete express.session
