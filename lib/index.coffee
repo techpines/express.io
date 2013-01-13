@@ -54,7 +54,6 @@ express.application.io = (options) ->
             sessionConfig.store.get sessionId, (error, session) ->
                 return next error if error?
                 data.session = new connect.session.Session data, session
-                data.sessionStore = sessionConfig.store
                 next null, true
 
     @io.sockets.on 'connection', (socket) =>
