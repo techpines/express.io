@@ -51,6 +51,7 @@ express.application.io = (options) ->
             rawCookie = data.cookies[sessionConfig.key]
             sessionId = connect.utils.parseSignedCookie rawCookie, sessionConfig.secret
             data.sessionID = sessionId
+            data.sessionStore = sessionConfig.store
             sessionConfig.store.get sessionId, (error, session) ->
                 return next error if error?
                 data.session = new connect.session.Session data, session
