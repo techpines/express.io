@@ -51,7 +51,6 @@ express.application.io = (options) ->
             rawCookie = data.cookies[sessionConfig.key]
             sessionId = connect.utils.parseSignedCookie rawCookie, sessionConfig.secret
             data.sessionID = sessionId
-            data.sessionStore = sessionConfig.store
             sessionConfig.store.get sessionId, (error, session) ->
                 return next error if error?
                 data.session = new connect.session.Session data, session
@@ -105,10 +104,14 @@ initRoutes = (socket, io) ->
                 data: data
                 session: socket.handshake.session
                 sessionID: socket.handshake.sessionID
+                sessionStore: sessionConfig.store
                 socket: socket
                 headers: socket.handshake.headers
                 cookies: socket.handshake.cookies
                 handshake: socket.handshake
+            session = socket.handshake.session
+            request.session = new connect.session.Session request, session if session?
+            socket.handshake.session = request.session
             request.io = new RequestIO(socket, request, io)
             request.io.respond = respond
             request.io.respond ?= ->
