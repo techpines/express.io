@@ -7,7 +7,7 @@ async = require 'async'
 middleware = require './middleware'
 
 express.io = io
-express.io.routeForward = middlware.routeForward
+express.io.routeForward = middleware.routeForward
 
 session = express.session
 delete express.session
