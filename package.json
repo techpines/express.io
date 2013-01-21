@@ -1,17 +1,21 @@
 {
     "name": "express.io",
-    "version": "1.1.4",
-    "description": "realtime-web app framework for nodejs",
+    "version": "1.1.8",
+    "description": "Realtime-web framework for nodejs",
     "keywords": ["realtime", "web", "framework", "express.io", "express", "socket.io", "badass"],
     "homepage": "http://express-io.org",
     "author": "Brad Carleton <brad@techpines.com>",
     "repository": "git://github.com/techpines/express.io",
     "dependencies": {
-        "coffee-script": "1.4.0",
         "express": "3.0.4",
         "socket.io": "0.9.13",
         "connect": "2.7.1",
+<<<<<<< HEAD
         "async": "1.1.2"
+=======
+        "underscore": "1.4.3",
+        "coffee-script": "1.4.0"
+>>>>>>> master
     },
     "main": "switch.js"
 }

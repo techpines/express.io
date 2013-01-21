@@ -5,6 +5,7 @@ http = require 'http'
 https = require 'https'
 async = require 'async'
 middleware = require './middleware'
+_ = require 'underscore'
 
 express.io = io
 express.io.routeForward = middleware.routeForward
@@ -35,9 +36,17 @@ express.application.io = (options) ->
     @io.router = new Object
     @io.middleware = []
     @io.route = (route, next, options) ->
-        return @router[route] next if options?.trigger is true
-        @router[route] = next
-
+        if options?.trigger is true
+            if route.indexOf ':' is -1
+                @router[route] next
+            else
+                split = route.split ':'
+                @router[split[0]][split[1]] next
+        if _.isFunction next
+            @router[route] = next
+        else
+            for key, value of next
+                @router["#{route}:#{key}"] = value
     @io.configure => @io.set 'authorization', (data, next) =>
         unless sessionConfig.store?
             return async.forEachSeries @io.middleware, (callback, next) ->
@@ -54,7 +63,6 @@ express.application.io = (options) ->
             sessionConfig.store.get sessionId, (error, session) ->
                 return next error if error?
                 data.session = new connect.session.Session data, session
-                data.sessionStore = sessionConfig.store
                 next null, true
 
     @io.use = (callback) =>
@@ -108,10 +116,14 @@ initRoutes = (socket, io) ->
                 data: data
                 session: socket.handshake.session
                 sessionID: socket.handshake.sessionID
+                sessionStore: sessionConfig.store
                 socket: socket
                 headers: socket.handshake.headers
                 cookies: socket.handshake.cookies
                 handshake: socket.handshake
+            session = socket.handshake.session
+            request.session = new connect.session.Session request, session if session?
+            socket.handshake.session = request.session
             request.io = new RequestIO(socket, request, io)
             request.io.respond = respond
             request.io.respond ?= ->

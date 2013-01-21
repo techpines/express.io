@@ -1,0 +1,26 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+io = io.connect()
+
+io.on('posts:create', function(data) {
+    $('ul').append('<li>'+data.post+' <a href="#" id='+data.id+'>delete</a></li>')
+})
+io.on('posts:remove', function(data) {
+    $('a[id='+data.id+']').parent().remove()
+})
+
+$(function() {
+    $('button.create').click(function() {
+        data = {post: prompt('Type a post!')}
+        io.emit('posts:create', data)
+    })
+    $('body').on('click', 'a', function(event) {
+        event.preventDefault()
+        io.emit('posts:remove', {id: $(event.currentTarget).attr('id')}) 
+    })
+})
+</script>
+<ul></ul>
+<button class="create">Create Post</button>
+    

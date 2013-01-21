@@ -1,0 +1,21 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect();
+
+  // Emit ready event.
+  socket.emit('ready', prompt('What is your name?'))
+
+  // Listen for get-feelings event.
+  socket.on('get-feelings', function () {
+      socket.emit('send-feelings', prompt('How do you feel?'));
+  })
+
+  // Listen for session event.
+  socket.on('session', function(data) {
+      message = 'Hey ' + data.name + '!\n\n' 
+      message += 'Server says you feel '+ data.feelings + '\n'
+      message += 'I know these things because sessions work!\n\n'
+      message += 'Also, you joined ' + data.loginDate + '\n'
+      alert(message)
+  })
+</script>
