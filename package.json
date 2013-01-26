@@ -10,12 +10,14 @@
         "express": "3.0.4",
         "socket.io": "0.9.13",
         "connect": "2.7.1",
-<<<<<<< HEAD
-        "async": "1.1.2"
-=======
+        "async": "0.1.22",
         "underscore": "1.4.3",
         "coffee-script": "1.4.0"
->>>>>>> master
+    },
+    "devDependencies": {
+        "mocha": "*",
+        "chai": "*",
+        "socket.io-client": "*"
     },
     "main": "switch.js"
 }
