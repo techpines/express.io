@@ -59,5 +59,44 @@ describe 'the session example', ->
                 client.on 'session', (session) ->
                     session.name.should.equal 'brad'
                     session.feelings.should.equal 'good'
+                    should.exist session.loginDate 
                     done()
 
+describe 'the rooms example', ->
+    it 'should work', (next) ->
+        startExample '../examples/rooms/app', next, (done) ->
+            client = io.connect 'http://localhost:7076',
+                'force new connection': true
+            other = io.connect 'http://localhost:7076',
+                'force new connection': true
+            client.emit 'ready', 'cool'
+            process.nextTick ->
+                other.emit 'ready', 'cool'
+            client.on 'announce', (data) ->
+                message.should.equal 'New client in the cool room. '
+                done()
+            other.on 'announce', (data) ->
+                data.message.should.equal 'New client in the cool room. '
+                done()
+
+describe 'the acknowledgements example', ->
+    it 'should work', (next) ->
+        startExample '../examples/acknowledgements/app', next, (done) ->
+            client = io.connect 'http://localhost:7076',
+                'force new connection': true
+            client.emit 'ready', {}, (data) ->
+                data.success.should.equal 'here is your acknowledegment for the ready event'
+                done()
+
+describe 'the realtime canvas example', ->
+    it 'should work', (next) ->
+        startExample '../examples/realtime-canvas/app', next, (done) ->
+            client = io.connect 'http://localhost:7076',
+                'force new connection': true
+            other = io.connect 'http://localhost:7076',
+                'force new connection': true
+            client.emit 'drawClick'
+            other.on 'draw', ->
+                done()
+            client.on 'new visitor', ->
+                throw new Error 'should not receive'
