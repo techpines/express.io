@@ -9,7 +9,6 @@
     "dependencies": {
         "express": "3.0.4",
         "socket.io": "0.9.13",
-        "connect": "2.7.1",
         "async": "0.1.22",
         "underscore": "1.4.3",
         "coffee-script": "1.4.0"
@@ -18,7 +17,8 @@
         "request": "*",
         "mocha": "*",
         "chai": "*",
-        "socket.io-client": "*"
+        "socket.io-client": "*",
+        "jade": "*"
     },
     "main": "switch.js"
 }
