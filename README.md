@@ -96,6 +96,16 @@ Have frequent questions, we have frequent answers.
 
 [Check here](https://github.com/techpines/express.io/tree/master/docs/faq.md).
 
+## Test
+
+We have a full test suite.  We also run the full express test suite to ensure compatibility.
+
+```bash
+cd test
+./test
+```
+
+
 ## License
 It's free! Party with the MIT!
 

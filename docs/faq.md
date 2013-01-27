@@ -15,7 +15,7 @@ I take the examples in this project very seriously.  If you run into any problem
 
 ### Is this a drop-in replacement for express?
 
-Yes, just replace express with __express.io__, and you should have no issues with your current app.
+Yes, with the caveat that you are using a compatible version of express to the one express.io is using. Currently, express@3.x should just work as a replacement.
 
 ### Is it ready for production?
 
