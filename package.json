@@ -15,6 +15,7 @@
         "coffee-script": "1.4.0"
     },
     "devDependencies": {
+        "request": "*",
         "mocha": "*",
         "chai": "*",
         "socket.io-client": "*"
