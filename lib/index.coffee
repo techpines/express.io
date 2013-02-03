@@ -127,6 +127,8 @@ express.application.listen = ->
 initRoutes = (socket, io) ->
     setRoute = (key, callback) ->
         socket.on key, (data, respond) ->
+            if typeof data is 'function'
+                respond = data
             request =
                 data: data
                 session: socket.handshake.session
