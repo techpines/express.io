@@ -132,6 +132,7 @@ initRoutes = (socket, io) ->
         socket.on key, (data, respond) ->
             if typeof data is 'function'
                 respond = data
+                data = undefined
             request =
                 data: data
                 session: socket.handshake.session
