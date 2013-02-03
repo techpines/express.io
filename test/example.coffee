@@ -12,7 +12,7 @@ startExample = (appName, done, next) ->
     app = spawn 'node', [appName]
     setTimeout ->
         next done
-    , 500
+    , 750 # Allow the server time to start.
 
 describe 'the routing example', ->
     it 'should work', (next) ->
@@ -59,7 +59,7 @@ describe 'the session example', ->
                 client.on 'session', (session) ->
                     session.name.should.equal 'brad'
                     session.feelings.should.equal 'good'
-                    should.exist session.loginDate 
+                    should.exist session.loginDate
                     done()
 
 describe 'the rooms example', ->
@@ -69,15 +69,13 @@ describe 'the rooms example', ->
                 'force new connection': true
             other = io.connect 'http://localhost:7076',
                 'force new connection': true
-            client.emit 'ready', 'cool'
-            process.nextTick ->
-                other.emit 'ready', 'cool'
             client.on 'announce', (data) ->
-                message.should.equal 'New client in the cool room. '
-                done()
-            other.on 'announce', (data) ->
                 data.message.should.equal 'New client in the cool room. '
                 done()
+            client.emit 'ready', 'cool'
+            setTimeout ->
+                other.emit 'ready', 'cool'
+            , 100
 
 describe 'the acknowledgements example', ->
     it 'should work', (next) ->

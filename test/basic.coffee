@@ -12,6 +12,9 @@ describe 'a basic express.io app', ->
         app.io.route 'test-respond', (request) ->
             request.io.respond 'respond works'
 
+        app.io.route 'test-emit-no-data-with-callback', (request) ->
+            request.io.respond junk: 'test'
+
         app.io.route 'test-emit', (request) ->
             request.io.emit 'test-emit', 'emit works'
     
@@ -56,9 +59,13 @@ describe 'a basic express.io app', ->
         client.emit 'test-emit'
 
     it 'should respond', (done) ->
-        client.emit 'test-respond', {}, (message) ->
+        client.emit 'test-respond', (message) ->
             message.should.equal 'respond works'
-            done()
+            client.emit 'test-respond', {}, (message) ->
+                message.should.equal 'respond works'
+                done()
+        
+
 
     it 'should broadcast', (done) ->
         otherClient.on 'test-broadcast', (message) ->
@@ -79,7 +86,6 @@ describe 'a basic express.io app', ->
             total += 1
             done() if total is 2
         client.emit 'test-broadcast-app'
-
 
     it 'should have rooms to join', (done) ->
         client.emit 'join', room: 'test', ->
