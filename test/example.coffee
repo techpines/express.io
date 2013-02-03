@@ -75,7 +75,7 @@ describe 'the rooms example', ->
             client.emit 'ready', 'cool'
             setTimeout ->
                 other.emit 'ready', 'cool'
-            , 100
+            , 200
 
 describe 'the acknowledgements example', ->
     it 'should work', (next) ->

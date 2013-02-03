@@ -4,5 +4,5 @@ rm -f ../node_modules/express.io
 ln -sT ../. ../node_modules/express.io
 ../node_modules/mocha/bin/mocha --compilers coffee:coffee-script test.coffee --reporter spec --timeout 10000
 cd express
-npm install --loglevel error
+npm install
 make test
