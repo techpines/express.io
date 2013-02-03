@@ -4,15 +4,15 @@ io = require 'socket.io-client'
 easyrequest = require 'request'
 spawn = require('child_process').spawn
 
+app = null
+other = null
+client = null
+
 startExample = (appName, done, next) ->
     app = spawn 'node', [appName]
     setTimeout ->
-        next ->
-            app.kill 'SIGKILL'
-            setTimeout ->
-                done()
-            , 1200
-    , 2000
+        next done
+    , 500
 
 describe 'the routing example', ->
     it 'should work', (next) ->
@@ -100,3 +100,13 @@ describe 'the realtime canvas example', ->
                 done()
             client.on 'new visitor', ->
                 throw new Error 'should not receive'
+
+afterEach (done) ->
+    client.disconnect() if client?
+    other.disconnect() if other?
+    if app?
+        app.on 'exit', ->
+            done()
+    else
+        return done()
+    app.kill 'SIGKILL'
