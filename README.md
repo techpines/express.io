@@ -68,7 +68,7 @@ And then on the client you would emit these events:
 Or do it the old fashioned way:
 
 ```js
-app.io.route('ready', function(req) {
+app.io.route('my-realtime-route', function(req) {
     // respond to the ready event
 });
 ```
@@ -81,8 +81,15 @@ Sessions work automatically, just set them up like normal using express.
 app.use(express.session({secret: 'express.io makes me happy'}));
 ```
 
-## Examples
+## Double Up - Forward Normal Http Routes to Realtime Routes
 
+It's easy to forward regular http routes to your realtime routes.
+
+app.get('/', function(req, res) {
+    req.io.route('some-cool-realtime-route');
+});
+
+## Examples
 
 __All of these examples work.__  I repeat, __they all work__.  Express.io is a very simple framework that allows you to build incredibly complex realtime apps with very little code.
 
