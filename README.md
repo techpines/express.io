@@ -53,8 +53,8 @@ app.io.route('customers', {
     update: function(req) {
         // update your customer
     },
-    delete: function(req) {
-        // delete your customer
+    remove: function(req) {
+        // remove your customer
     },
 });
 ```
@@ -64,6 +64,14 @@ And then on the client you would emit these events:
 * `customers:create`
 * `customers:update`
 * `customers:delete`
+
+Or do it the old fashioned way:
+
+```js
+app.io.route('ready', function(req) {
+    // respond to the ready event
+});
+```
 
 ## Automatic Session Support
 
