@@ -69,6 +69,7 @@ express.application.io = (options) ->
                 return cookieParser request, null, (error) ->
                     data.cookies = request.cookies
                     rawCookie = data.cookies[sessionConfig.key]
+                    return next "No cookie present", false unless rawCookie?
                     sessionId = connect.utils.parseSignedCookie rawCookie, sessionConfig.secret
                     data.sessionID = sessionId
                     sessionConfig.store.get sessionId, (error, session) ->
