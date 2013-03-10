@@ -41,6 +41,37 @@ require('express.io')
 
 Your app should run just the same as before!  Express.io is designed to be a superset of Express and Socket.io.  An easy to use drop-in replacement that makes it simple to get started with the realtime-web.
 
+## Realtime Routing is Sweet
+
+With express.io you can do realtime routing like a pro.
+
+```js
+app.io.route('customers', {
+    create: function(req) {
+        // create your customer
+    },
+    update: function(req) {
+        // update your customer
+    },
+    delete: function(req) {
+        // delete your customer
+    },
+});
+```
+
+And then on the client you would emit these events:
+
+* `customers:create`
+* `customers:update`
+* `customers:delete`
+
+## Automatic Session Support
+
+Sessions work automatically, just set them up like normal using express.
+
+```js
+app.use(express.session({secret: 'express.io makes me happy'}));
+```
 
 ## Examples
 
