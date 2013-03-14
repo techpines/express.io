@@ -69,7 +69,7 @@ Or do it the old fashioned way:
 
 ```js
 app.io.route('my-realtime-route', function(req) {
-    // respond to the ready event
+    // respond to the event
 });
 ```
 
@@ -85,9 +85,11 @@ app.use(express.session({secret: 'express.io makes me happy'}));
 
 It's easy to forward regular http routes to your realtime routes.
 
+```js
 app.get('/', function(req, res) {
     req.io.route('some-cool-realtime-route');
 });
+```
 
 ## Examples
 
