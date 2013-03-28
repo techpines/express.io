@@ -1,5 +1,5 @@
 
 require('chai').should()
 require './basic'
-require './example'
+#require './example'
 #require './redis'
