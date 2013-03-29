@@ -149,8 +149,8 @@ Have frequent questions, we have frequent answers.
 We have a full test suite.  We also run the full express test suite to ensure compatibility.
 
 ```bash
-cd test
-./test
+cd express.io
+npm test
 ```
 
 
