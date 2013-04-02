@@ -152,22 +152,6 @@ __Note__: When you forward http requests to io routes, `req.io.respond(data)` wi
 
 Also, depending on the sophistication needed between a socket request and a web request, you might consider writing your own custom middleware layer and overriding `req.io.route` for your web requests.
 
-## Middleware
-
-Middleware only runs __ONCE__ during the initial io connection. This allows you to perform authentication, log things in your database, or anything else you can imagine.  It does not run on every subsequent io request.  
-
-#### Server (app.js)
-
-```
-app = require('express.io')()
-
-app.io.use(function(data, next) {
-    next('screw you')
-})
-
-app.listen(7076)
-```
-
 ## Broadcasting
 
 __This is a copy-paste example__ [(get the code)](https://github.com/techpines/express.io/tree/master/examples/broadcasting)
