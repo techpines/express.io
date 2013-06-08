@@ -1,4 +1,3 @@
-
 # Examples
 
 __All of these examples work__.  I repeat, __all of these examples work__.  Almost every example will work if copy and pasted.  These are working examples.  Just make sure you have `node` and `express.io` installed. :)
@@ -281,7 +280,7 @@ Sometimes you will want to group your io clients together into rooms.  With __ex
 * `req.io.join(room)` - The client for the request joins `room`.
 * `req.io.leave(room)` - The client for the request leaves `room`.
 * `req.io.room(room).broadcast(event, data)` - Broadcast to all client in the room except for the current one.
-* `app.io.room(room).brodcast(event, data)` - Broadcast to all clients in the room.
+* `app.io.room(room).broadcast(event, data)` - Broadcast to all clients in the room.
 
 For this example, open two browser windows on `localhost:7076`.  You will be prompted to give a room name.  Enter the same room name for each browser, then check back with the first window to see the result.  
 
