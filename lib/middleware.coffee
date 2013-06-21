@@ -59,8 +59,8 @@ exports.routeForward = (options) ->
                 if match?
                     meta.variables ?= []
                     request.params ?= {}
-                    for variable, index of meta.variables
-                        request.params[variable] = match[index + 2]
+                    for index, variable of meta.variables
+                        request.params[variable] = match[2 + parseInt(index)]
                     return request.io.route("#{match[1]}:#{route}")
         next()
         
