@@ -1,5 +1,5 @@
 express = require('express.io')
-redis = require('redis')
+redis = require('socket.io/node_modules/redis')
 RedisStore = express.io.RedisStore
 
 // This is what the workers will do.
