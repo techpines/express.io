@@ -1,6 +1,6 @@
 {
     "name": "express.io",
-    "version": "1.1.12",
+    "version": "1.1.13",
     "description": "Realtime-web framework for nodejs",
     "keywords": ["realtime", "web", "framework", "express.io", "express", "socket.io", "badass"],
     "homepage": "http://express-io.org",
