@@ -1,4 +1,3 @@
-
 RoomIO = require('./room').RoomIO
 
 class exports.RequestIO
@@ -27,7 +26,7 @@ class exports.RequestIO
 
     on: ->
         args = Array.prototype.slice.call arguments, 0
-        @sockets.on.apply @socket, args
+        @socket.on.apply @socket, args
 
     disconnect: (callback) ->
         @socket.disconnect(callback)
