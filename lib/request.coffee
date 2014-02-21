@@ -1,4 +1,3 @@
-
 RoomIO = require('./room').RoomIO
 
 class exports.RequestIO
@@ -9,10 +8,16 @@ class exports.RequestIO
     
     broadcast: (event, message) ->
         @socket.broadcast.emit(event, message)
-    
-    emit: (event, message) ->
-        @socket.emit(event, message)
-    
+        
+    emit: (event, message, cb) ->
+        @socket.emit(event, message, cb)
+
+    get: (key, cb) ->
+      @socket.get(key, cb)
+
+    set: (key, val, cb) ->
+      @socket.set(key, val, cb)
+
     room: (room) ->
         new RoomIO(room, @socket)
 
@@ -27,7 +32,7 @@ class exports.RequestIO
 
     on: ->
         args = Array.prototype.slice.call arguments, 0
-        @sockets.on.apply @socket, args
+        @socket.on.apply @socket, args
 
     disconnect: (callback) ->
         @socket.disconnect(callback)
