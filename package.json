@@ -1,6 +1,6 @@
 {
     "name": "express.io",
-    "version": "1.1.13",
+    "version": "1.1.14",
     "description": "Realtime-web framework for nodejs",
     "keywords": ["realtime", "web", "framework", "express.io", "express", "socket.io", "badass"],
     "homepage": "http://express-io.org",
@@ -28,7 +28,8 @@
         "socket.io": "~0.9.16",
         "async": "0.1.22",
         "underscore": "1.4.3",
-        "coffee-script": "1.4.0"
+        "coffee-script": "1.4.0",
+        "express-session": "^1.2.1"
     },
     "devDependencies": {
         "request": "*",
