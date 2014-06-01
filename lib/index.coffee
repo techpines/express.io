@@ -1,6 +1,7 @@
 cookieParser = require 'cookie-parser'
 cookieParserUtils = require 'node_modules/cookie-parser/lib/parse'
 express = require 'express'
+expressLayer = require 'node_modules/express/lib/router/layer'
 expressSession = require 'express-session'
 io = require 'socket.io'
 http = require 'http'
@@ -99,26 +100,30 @@ express.application.io = (options) ->
     @io.room = (room) =>
         new RoomIO(room, @io.sockets)  
     
-    @_router.stack.push
-        keys: []
-        regexp: /^\/?$/i
-        handle: (request, response, next) =>
-            request.io =
-                route: (route) =>
-                    ioRequest = new Object
-                    for key, value of request
-                        ioRequest[key] = value
-                    ioRequest.io =
-                        broadcast: @io.broadcast
-                        respond: =>
-                            args = Array.prototype.slice.call arguments, 0
-                            response.json.apply response, args
-                        route: (route) =>
-                            @io.route route, ioRequest, trigger: true
-                        data: request.body
-                    @io.route route, ioRequest, trigger: true
-                broadcast: @io.broadcast
-            next()
+    layer = new expressLayer('',
+        sensitive: undefined
+        strict: undefined
+        end: false
+    , (request, response, next) =>
+        request.io =
+            route: (route) =>
+                ioRequest = new Object
+                for key, value of request
+                    ioRequest[key] = value
+                ioRequest.io =
+                    broadcast: @io.broadcast
+                    respond: =>
+                        args = Array.prototype.slice.call arguments, 0
+                        response.json.apply response, args
+                    route: (route) =>
+                        @io.route route, ioRequest, trigger: true
+                    data: request.body
+                @io.route route, ioRequest, trigger: true
+            broadcast: @io.broadcast
+        next()
+    )
+    
+    @_router.stack.push layer
 
     return this
 
