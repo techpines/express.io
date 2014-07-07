@@ -1,47 +1,62 @@
 {
-    "name": "express.io",
-    "version": "1.1.13",
-    "description": "Realtime-web framework for nodejs",
-    "keywords": ["realtime", "web", "framework", "express.io", "express", "socket.io", "badass"],
-    "homepage": "http://express-io.org",
-    "author": "Brad Carleton <brad@techpines.com>",
-    "repository": "git://github.com/techpines/express.io",
-    "contributors": [{
-        "name": "Brad Carleton",
-        "email": "brad@techpines.com",
-        "url": "http://techpines.com"
-    },{
-        "name": "James Wyse",
-        "email": "james@jameswyse.net",
-        "url": "http://www.jameswyse.net"
-    },{
-        "name": "Edward Smith",
-        "email": "ed@camayak.com",
-        "url": "https://github.com/edwardmsmith"
-    },{
-        "name": "Krzysztof",
-        "email": "pharcosyle@gmail.com",
-        "url": "https://github.com/pharcosyle"
-    }],
-    "dependencies": {
-        "express": "~3.4.0",
-        "socket.io": "~0.9.16",
-        "async": "0.1.22",
-        "underscore": "1.4.3",
-        "coffee-script": "1.4.0"
+  "name": "express.io",
+  "version": "1.1.14",
+  "description": "Realtime-web framework for nodejs",
+  "keywords": [
+    "realtime",
+    "web",
+    "framework",
+    "express.io",
+    "express",
+    "socket.io",
+    "badass"
+  ],
+  "homepage": "http://express-io.org",
+  "author": "Brad Carleton <brad@techpines.com>",
+  "repository": "git://github.com/techpines/express.io",
+  "contributors": [
+    {
+      "name": "Brad Carleton",
+      "email": "brad@techpines.com",
+      "url": "http://techpines.com"
     },
-    "devDependencies": {
-        "request": "*",
-        "mocha": "*",
-        "chai": "*",
-        "socket.io-client": "*",
-        "jade": "*"
+    {
+      "name": "James Wyse",
+      "email": "james@jameswyse.net",
+      "url": "http://www.jameswyse.net"
     },
-    "main": "switch.js",
-    "scripts": {
-        "test": "./node_modules/mocha/bin/mocha test/test.coffee",
-        "compile": "./node_modules/coffee-script/bin/coffee -o compiled/ -c lib/",
-        "prepublish": "echo $(pwd) > /tmp/.pwd; ./node_modules/coffee-script/bin/coffee -o compiled/ -c lib/;",
-        "postpublish": "rm -rf $(cat /tmp/.pwd)/compiled"
+    {
+      "name": "Edward Smith",
+      "email": "ed@camayak.com",
+      "url": "https://github.com/edwardmsmith"
+    },
+    {
+      "name": "Krzysztof",
+      "email": "pharcosyle@gmail.com",
+      "url": "https://github.com/pharcosyle"
     }
+  ],
+  "dependencies": {
+    "async": "0.1.22",
+    "coffee-script": "1.4.0",
+    "cookie-parser": "^1.1.0",
+    "express": "^4.4.0",
+    "express-session": "^1.2.1",
+    "socket.io": "~0.9.16",
+    "underscore": "1.4.3"
+  },
+  "devDependencies": {
+    "request": "*",
+    "mocha": "*",
+    "chai": "*",
+    "socket.io-client": "*",
+    "jade": "*"
+  },
+  "main": "switch.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha test/test.coffee",
+    "compile": "./node_modules/coffee-script/bin/coffee -o compiled/ -c lib/",
+    "prepublish": "echo $(pwd) > /tmp/.pwd; ./node_modules/coffee-script/bin/coffee -o compiled/ -c lib/;",
+    "postpublish": "rm -rf $(cat /tmp/.pwd)/compiled"
+  }
 }

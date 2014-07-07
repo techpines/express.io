@@ -1,5 +1,8 @@
-connect = require 'express/node_modules/connect'
+cookieParser = require 'cookie-parser'
+cookieParserUtils = require 'cookie-parser/lib/parse'
 express = require 'express'
+expressLayer = require 'express/lib/router/layer'
+expressSession = require 'express-session'
 io = require 'socket.io'
 http = require 'http'
 https = require 'https'
@@ -13,12 +16,12 @@ RoomIO = require('./room').RoomIO
 express.io = io
 express.io.routeForward = middleware.routeForward
 
-session = express.session
+session = expressSession;
 delete express.session
 sessionConfig = new Object
 express.session = (options) ->
     options ?= new Object
-    options.key ?= 'connect.sid'
+    options.key ?= 'express.sid'
     options.store ?= new session.MemoryStore
     options.cookie ?= new Object
     sessionConfig = options
@@ -37,7 +40,7 @@ express.application.https = (options) ->
 express.application.io = (options) ->
     options ?= new Object
     defaultOptions = log:false
-    _.extend options, defaultOptions
+    _.defaults options, defaultOptions
     @io = io.listen @server, options
     @io.router = new Object
     @io.middleware = []
@@ -60,7 +63,7 @@ express.application.io = (options) ->
             , (error) ->
                 return next error if error?
                 next null, true
-        cookieParser = express.cookieParser()
+        cookieParser = cookieParser()
         cookieParser data, null, (error) ->
             return next error if error?
             rawCookie = data.cookies[sessionConfig.key]
@@ -70,18 +73,18 @@ express.application.io = (options) ->
                     data.cookies = request.cookies
                     rawCookie = data.cookies[sessionConfig.key]
                     return next "No cookie present", false unless rawCookie?
-                    sessionId = connect.utils.parseSignedCookie rawCookie, sessionConfig.secret
+                    sessionId = cookieParserUtils.signedCookies rawCookie, sessionConfig.secret
                     data.sessionID = sessionId
                     sessionConfig.store.get sessionId, (error, session) ->
                         return next error if error?
-                        data.session = new connect.session.Session data, session
+                        data.session = new expressSession.Session data, session
                         next null, true
                     
-            sessionId = connect.utils.parseSignedCookie rawCookie, sessionConfig.secret
+            sessionId = cookieParserUtils.signedCookies rawCookie, sessionConfig.secret
             data.sessionID = sessionId
             sessionConfig.store.get sessionId, (error, session) ->
                 return next error if error?
-                data.session = new connect.session.Session data, session
+                data.session = new expressSession.Session data, session
                 next null, true
 
     @io.use = (callback) =>
@@ -95,27 +98,32 @@ express.application.io = (options) ->
         @io.sockets.emit.apply @io.sockets, args
 
     @io.room = (room) =>
-        new RoomIO(room, @io.sockets)
-
-    @stack.push
-        route: ''
-        handle: (request, response, next) =>
-            request.io =
-                route: (route) =>
-                    ioRequest = new Object
-                    for key, value of request
-                        ioRequest[key] = value
-                    ioRequest.io =
-                        broadcast: @io.broadcast
-                        respond: =>
-                            args = Array.prototype.slice.call arguments, 0
-                            response.json.apply response, args
-                        route: (route) =>
-                            @io.route route, ioRequest, trigger: true
-                        data: request.body
-                    @io.route route, ioRequest, trigger: true
-                broadcast: @io.broadcast
-            next()
+        new RoomIO(room, @io.sockets)  
+    
+    layer = new expressLayer('',
+        sensitive: undefined
+        strict: undefined
+        end: false
+    , (request, response, next) =>
+        request.io =
+            route: (route) =>
+                ioRequest = new Object
+                for key, value of request
+                    ioRequest[key] = value
+                ioRequest.io =
+                    broadcast: @io.broadcast
+                    respond: =>
+                        args = Array.prototype.slice.call arguments, 0
+                        response.json.apply response, args
+                    route: (route) =>
+                        @io.route route, ioRequest, trigger: true
+                    data: request.body
+                @io.route route, ioRequest, trigger: true
+            broadcast: @io.broadcast
+        next()
+    )
+    
+    @_router.stack.push layer
 
     return this
 
@@ -144,7 +152,7 @@ initRoutes = (socket, io) ->
                 cookies: socket.handshake.cookies
                 handshake: socket.handshake
             session = socket.handshake.session
-            request.session = new connect.session.Session request, session if session?
+            request.session = new expressSession.Session request, session if session?
             socket.handshake.session = request.session
             request.io = new RequestIO(socket, request, io)
             request.io.respond = respond
