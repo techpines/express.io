@@ -54,7 +54,7 @@ __Note__:  You must call `app.io()` before using.
 
 ### Properties
 
-* `app.io.brodcast(event, data)` - Broadcast the `event` and `data` to all clients.
+* `app.io.broadcast(event, data)` - Broadcast the `event` and `data` to all clients.
 * `app.io.room(room).broadcast(event, data)` - Broadcast the `event` and `data` only to clients in the `room`.
 * `app.io.route(event, callback)` - Takes a `route` name and a `callback`.  The callback passes `req`, which is a `SocketRequest` object.
 * `app.io.set(property, value)` - Set a global io server property.
